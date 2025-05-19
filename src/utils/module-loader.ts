@@ -6,6 +6,7 @@ import { DATABASE_TYPES } from '../constants/enum';
 import { User } from '../models/entities/user';
 import { UserToken } from '../models/entities/user-token';
 import { Markdown } from '../models/entities/markdown';
+import { MarkdownPhoto } from '../models/entities/markdown-photo';
 
 export const loadConfigModule = (): Promise<DynamicModule> => {
     return ConfigModule.forRoot({
@@ -25,7 +26,7 @@ export const loadTypeOrmModule = (): DynamicModule => {
         username: databaseConfig.username,
         password: databaseConfig.password,
         database: databaseConfig.name,
-        entities: [User, UserToken, Markdown],
+        entities: [User, UserToken, Markdown, MarkdownPhoto],
         synchronize: databaseConfig.synchronize,
     });
 };

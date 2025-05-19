@@ -2,11 +2,13 @@ import {
     Column,
     Entity,
     ManyToOne,
+    OneToMany,
     Point,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
 import { User } from './user';
+import { MarkdownPhoto } from './markdown-photo';
 
 @Entity(DATABASE_TABLE_NAMES.MARKDOWNS)
 export class Markdown {
@@ -33,4 +35,7 @@ export class Markdown {
 
     @ManyToOne(() => User, (user) => user.markdowns)
     user: User;
+
+    @OneToMany(() => MarkdownPhoto, (markdownPhoto) => markdownPhoto.markdown)
+    photos?: MarkdownPhoto[];
 }
