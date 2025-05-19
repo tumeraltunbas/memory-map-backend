@@ -3,6 +3,9 @@ import configuration, { DatabaseConfig } from '../config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DynamicModule } from '@nestjs/common';
 import { DATABASE_TYPES } from '../constants/enum';
+import { User } from '../models/entities/user';
+import { UserToken } from '../models/entities/user-token';
+import { Markdown } from '../models/entities/markdown';
 
 export const loadConfigModule = (): Promise<DynamicModule> => {
     return ConfigModule.forRoot({
@@ -22,7 +25,7 @@ export const loadTypeOrmModule = (): DynamicModule => {
         username: databaseConfig.username,
         password: databaseConfig.password,
         database: databaseConfig.name,
-        autoLoadEntities: true,
+        entities: [User, UserToken, Markdown],
         synchronize: databaseConfig.synchronize,
     });
 };

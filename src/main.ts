@@ -7,7 +7,7 @@ import { ConfigService } from '@nestjs/config';
 import { CONFIGURATION_KEYS } from './constants/configuration';
 import { ValidationPipe } from '@nestjs/common';
 import { getValidationPipeOptions } from './infrastructure/validation/validation';
-import cookieParser from 'cookie-parser';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
