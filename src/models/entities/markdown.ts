@@ -9,6 +9,7 @@ import {
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
 import { User } from './user';
 import { MarkdownPhoto } from './markdown-photo';
+import { MarkdownNote } from './markdown-note';
 
 @Entity(DATABASE_TABLE_NAMES.MARKDOWNS)
 export class Markdown {
@@ -38,4 +39,7 @@ export class Markdown {
 
     @OneToMany(() => MarkdownPhoto, (markdownPhoto) => markdownPhoto.markdown)
     photos?: MarkdownPhoto[];
+
+    @OneToMany(() => MarkdownNote, (markdownNote) => markdownNote.markdown)
+    notes?: MarkdownNote[];
 }

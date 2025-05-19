@@ -3,4 +3,5 @@ export const DATABASE_TABLE_NAMES = {
     USER_TOKENS: 'user_tokens',
     MARKDOWNS: 'markdowns',
     MARKDOWN_PHOTOS: 'markdown_photos',
+    MARKDOWN_NOTES: 'markdown_notes',
 };
