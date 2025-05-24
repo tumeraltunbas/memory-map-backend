@@ -6,8 +6,9 @@ import { Response } from 'express';
 import { SecurityConfig } from '../../config/configuration';
 import { ConfigService } from '@nestjs/config';
 import { CONFIGURATION_KEYS } from '../../constants/configuration';
+import { AUTH_ROUTES } from '../../constants/prefix';
 
-@Controller('auth')
+@Controller(AUTH_ROUTES.BASE)
 export class AuthController {
     private readonly securityConfig: SecurityConfig;
     constructor(
@@ -19,7 +20,7 @@ export class AuthController {
         );
     }
 
-    @Post('register')
+    @Post(AUTH_ROUTES.REGISTER)
     async register(
         @Body() registerReqDto: RegisterReqDto,
         @Res() res: Response,
@@ -36,7 +37,7 @@ export class AuthController {
             });
     }
 
-    @Post('login')
+    @Post(AUTH_ROUTES.LOGIN)
     async login(
         @Body() loginReqDto: LoginReqDto,
         @Res() res: Response,
