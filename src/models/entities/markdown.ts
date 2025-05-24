@@ -3,7 +3,6 @@ import {
     Entity,
     ManyToOne,
     OneToMany,
-    Point,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
@@ -20,7 +19,7 @@ export class Markdown {
     title: string;
 
     @Column({ type: 'point' })
-    geoLocation: Point;
+    geoLocation: string;
 
     @Column({
         type: 'timestamp without time zone',
@@ -43,3 +42,8 @@ export class Markdown {
     @OneToMany(() => MarkdownNote, (markdownNote) => markdownNote.markdown)
     notes?: MarkdownNote[];
 }
+
+export type Point = {
+    x: number;
+    y: number;
+};

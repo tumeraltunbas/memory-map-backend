@@ -5,6 +5,7 @@ export const ERROR_CODES = {
     invalidCredentials: 'invalid_credentials',
     inactiveUser: 'inactive_user',
     authorizationError: 'authorization_error',
+    markdownAlreadyExists: 'markdown_already_exists',
 };
 
 export const ERROR_MESSAGES = {
@@ -14,4 +15,6 @@ export const ERROR_MESSAGES = {
     invalid_credentials: 'Invalid credentials.',
     inactive_user: 'Inactive user.',
     authorization_error: 'Authorization error.',
+    markdown_already_exists:
+        'Markdown with the same geo-location already exists.',
 };

@@ -17,6 +17,7 @@ import { JwtMiddleware } from '../../middlewares/jwt.middleware';
     imports: [UserModule, TypeOrmModule.forFeature([UserToken])],
     providers: [AuthService, AuthOrchestration, AuthRepository],
     controllers: [AuthController],
+    exports: [AuthService],
 })
 export class AuthModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
