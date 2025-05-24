@@ -1,8 +1,14 @@
 import { Body, Controller, Get, Post, Req } from '@nestjs/common';
 import { MARKDOWN_ROUTES } from '../../constants/prefix';
 import { MarkdownOrchestration } from './markdown.orchestration';
-import { CreateMarkdownReqDto, GetMarkdownsReqDto } from '../../models/dto/req/markdown';
-import { CreateMarkdownResDto, GetMarkdownsResDto } from '../../models/dto/res/markdown';
+import {
+    CreateMarkdownReqDto,
+    GetMarkdownsReqDto,
+} from '../../models/dto/req/markdown';
+import {
+    CreateMarkdownResDto,
+    GetMarkdownsResDto,
+} from '../../models/dto/res/markdown';
 import { CustomRequest } from '../../models/entities/request';
 
 @Controller(MARKDOWN_ROUTES.BASE)
@@ -29,6 +35,8 @@ export class MarkdownController {
             user: req.user,
         };
 
-        return await this.markdownOrchestration.getMarkdowns(getMarkdownsReqDto);
+        return await this.markdownOrchestration.getMarkdowns(
+            getMarkdownsReqDto,
+        );
     }
 }

@@ -1,7 +1,7 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Markdown } from '../../models/entities/markdown';
-import { FindManyOptions, FindOptions, Repository } from 'typeorm';
+import { FindManyOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class MarkdownRepository {

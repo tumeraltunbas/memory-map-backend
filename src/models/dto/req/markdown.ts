@@ -1,7 +1,6 @@
 import {
     ArrayMaxSize,
     ArrayMinSize,
-    IsArray,
     IsNotEmpty,
     IsNumber,
     IsString,
