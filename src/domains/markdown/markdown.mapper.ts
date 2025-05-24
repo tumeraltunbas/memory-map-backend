@@ -1,5 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { GetMarkdownsResDto } from '../../models/dto/res/markdown';
+import {
+    GetMarkdownResDto,
+    GetMarkdownsResDto,
+} from '../../models/dto/res/markdown';
 import { Markdown } from '../../models/entities/markdown';
 
 @Injectable()
@@ -16,5 +19,19 @@ export class MarkdownMapper {
         };
 
         return getMarkdownsResDto;
+    }
+
+    mapMarkdown(markdown: Markdown): GetMarkdownResDto {
+        const getMarkdownResDto: GetMarkdownResDto = {
+            markdownId: markdown.id,
+            title: markdown.title,
+            geoLocation: markdown.geoLocation,
+            photos: markdown.photos.map((photo) => photo.fileName),
+            notes: markdown.notes.map((note) => note.text),
+            createdAt: markdown.createdAt,
+            updatedAt: markdown.updatedAt,
+        };
+
+        return getMarkdownResDto;
     }
 }

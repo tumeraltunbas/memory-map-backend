@@ -43,12 +43,25 @@ export class MarkdownRepository {
     async getMarkdownById(
         markdownId: string,
         userId: string,
+        withPhotos?: boolean,
+        withNotes?: boolean,
     ): Promise<Markdown> {
+        const relations: string[] = [];
+
+        if (withPhotos) {
+            relations.push('photos');
+        }
+
+        if (withNotes) {
+            relations.push('notes');
+        }
+
         const query: FindOneOptions<Markdown> = {
             where: {
                 user: { id: userId },
                 id: markdownId,
             },
+            relations: relations,
         };
 
         return this.markdownRepository.findOne(query);

@@ -12,10 +12,12 @@ import { MarkdownOrchestration } from './markdown.orchestration';
 import {
     CreateMarkdownReqDto,
     DeleteMarkdownReqDto,
+    GetMarkdownReqDto,
     GetMarkdownsReqDto,
 } from '../../models/dto/req/markdown';
 import {
     CreateMarkdownResDto,
+    GetMarkdownResDto,
     GetMarkdownsResDto,
 } from '../../models/dto/res/markdown';
 import { CustomRequest } from '../../models/entities/request';
@@ -61,5 +63,18 @@ export class MarkdownController {
 
         await this.markdownOrchestration.deleteMarkdown(deleteMarkdownReqDto);
         return undefined;
+    }
+
+    @Get(MARKDOWN_ROUTES.GET_SINGLE)
+    async getMarkdown(
+        @Req() req: CustomRequest,
+        @Param('markdownId') markdownId: string,
+    ): Promise<GetMarkdownResDto> {
+        const getMarkdownReqDto: GetMarkdownReqDto = {
+            markdownId,
+            user: req.user,
+        };
+
+        return await this.markdownOrchestration.getMarkdown(getMarkdownReqDto);
     }
 }

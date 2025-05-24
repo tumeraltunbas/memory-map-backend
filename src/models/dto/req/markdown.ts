@@ -29,3 +29,8 @@ export class DeleteMarkdownReqDto {
     markdownId: string;
     user: User;
 }
+
+export class GetMarkdownReqDto {
+    markdownId: string;
+    user: User;
+}

@@ -18,8 +18,18 @@ export class MarkdownService {
         return this.markdownRepository.getMarkdowns(userId);
     }
 
-    getMarkdownById(markdownId: string, userId: string): Promise<Markdown> {
-        return this.markdownRepository.getMarkdownById(markdownId, userId);
+    getMarkdownById(
+        markdownId: string,
+        userId: string,
+        withPhotos?: boolean,
+        withNotes?: boolean,
+    ): Promise<Markdown> {
+        return this.markdownRepository.getMarkdownById(
+            markdownId,
+            userId,
+            withPhotos,
+            withNotes,
+        );
     }
 
     async deleteMarkdown(markdownId: string, userId: string): Promise<void> {

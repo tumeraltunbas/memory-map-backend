@@ -9,4 +9,5 @@ export enum MARKDOWN_ROUTES {
     CREATE = '',
     GET_ALL = '',
     DELETE = ':markdownId',
+    GET_SINGLE = ':markdownId',
 }

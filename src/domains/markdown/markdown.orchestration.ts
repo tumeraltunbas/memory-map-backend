@@ -4,6 +4,7 @@ import { Markdown } from '../../models/entities/markdown';
 import {
     CreateMarkdownReqDto,
     DeleteMarkdownReqDto,
+    GetMarkdownReqDto,
     GetMarkdownsReqDto,
 } from '../../models/dto/req/markdown';
 import { Logger } from '../../infrastructure/logger/logger.service';
@@ -14,6 +15,7 @@ import {
 import { ERROR_CODES } from '../../constants/error';
 import {
     CreateMarkdownResDto,
+    GetMarkdownResDto,
     GetMarkdownsResDto,
 } from '../../models/dto/res/markdown';
 import { convertToPoint } from '../../utils/db';
@@ -136,5 +138,40 @@ export class MarkdownOrchestration {
         }
 
         return undefined;
+    }
+
+    async getMarkdown(
+        getMarkdownReqDto: GetMarkdownReqDto,
+    ): Promise<GetMarkdownResDto> {
+        const { markdownId, user } = getMarkdownReqDto;
+
+        const withPhotos: boolean = true;
+        const withNotes: boolean = true;
+
+        let markdown: Markdown = null;
+
+        try {
+            markdown = await this.markdownService.getMarkdownById(
+                markdownId,
+                user.id,
+                withPhotos,
+                withNotes,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Markdown orchestration - getMarkdown - getMarkdownById',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (!markdown) {
+            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
+        }
+
+        const getMarkdownResDto: GetMarkdownResDto =
+            this.markdownMapper.mapMarkdown(markdown);
+
+        return getMarkdownResDto;
     }
 }

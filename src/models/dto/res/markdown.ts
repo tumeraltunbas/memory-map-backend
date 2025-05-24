@@ -11,3 +11,13 @@ export interface GetMarkdownsResDto {
         updatedAt: Date;
     }[];
 }
+
+export interface GetMarkdownResDto {
+    markdownId: string;
+    title: string;
+    geoLocation: string;
+    photos: string[];
+    notes: string[];
+    createdAt: Date;
+    updatedAt: Date;
+}
