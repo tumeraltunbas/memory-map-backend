@@ -1,8 +1,17 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Req,
+} from '@nestjs/common';
 import { MARKDOWN_ROUTES } from '../../constants/prefix';
 import { MarkdownOrchestration } from './markdown.orchestration';
 import {
     CreateMarkdownReqDto,
+    DeleteMarkdownReqDto,
     GetMarkdownsReqDto,
 } from '../../models/dto/req/markdown';
 import {
@@ -38,5 +47,19 @@ export class MarkdownController {
         return await this.markdownOrchestration.getMarkdowns(
             getMarkdownsReqDto,
         );
+    }
+
+    @Delete(MARKDOWN_ROUTES.DELETE)
+    async deleteMarkdown(
+        @Req() req: CustomRequest,
+        @Param('markdownId') markdownId: string,
+    ): Promise<void> {
+        const deleteMarkdownReqDto: DeleteMarkdownReqDto = {
+            markdownId,
+            user: req.user,
+        };
+
+        await this.markdownOrchestration.deleteMarkdown(deleteMarkdownReqDto);
+        return undefined;
     }
 }

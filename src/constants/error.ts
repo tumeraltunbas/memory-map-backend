@@ -6,6 +6,7 @@ export const ERROR_CODES = {
     inactiveUser: 'inactive_user',
     authorizationError: 'authorization_error',
     markdownAlreadyExists: 'markdown_already_exists',
+    markdownNotFound: 'markdown_not_found',
 };
 
 export const ERROR_MESSAGES = {
@@ -17,4 +18,5 @@ export const ERROR_MESSAGES = {
     authorization_error: 'Authorization error.',
     markdown_already_exists:
         'Markdown with the same geo-location already exists.',
+    markdown_not_found: 'Markdown not found.',
 };

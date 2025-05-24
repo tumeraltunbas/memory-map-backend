@@ -24,3 +24,8 @@ export class CreateMarkdownReqDto {
 export class GetMarkdownsReqDto {
     user: User;
 }
+
+export class DeleteMarkdownReqDto {
+    markdownId: string;
+    user: User;
+}

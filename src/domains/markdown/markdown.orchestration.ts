@@ -3,6 +3,7 @@ import { MarkdownService } from './markdown.service';
 import { Markdown } from '../../models/entities/markdown';
 import {
     CreateMarkdownReqDto,
+    DeleteMarkdownReqDto,
     GetMarkdownsReqDto,
 } from '../../models/dto/req/markdown';
 import { Logger } from '../../infrastructure/logger/logger.service';
@@ -98,5 +99,42 @@ export class MarkdownOrchestration {
             this.markdownMapper.mapMarkdowns(markdowns);
 
         return getMarkdownsResDto;
+    }
+
+    async deleteMarkdown(
+        deleteMarkdownReqDto: DeleteMarkdownReqDto,
+    ): Promise<void> {
+        const { markdownId, user } = deleteMarkdownReqDto;
+
+        let markdown: Markdown = null;
+
+        try {
+            markdown = await this.markdownService.getMarkdownById(
+                markdownId,
+                user.id,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Markdown orchestration - getMarkdowns - getMarkdownById',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (!markdown) {
+            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
+        }
+
+        try {
+            await this.markdownService.deleteMarkdown(markdownId, user.id);
+        } catch (error) {
+            this.logger.error(
+                'Markdown orchestration - getMarkdowns - getMarkdownById',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
     }
 }
