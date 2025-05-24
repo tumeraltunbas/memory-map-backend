@@ -34,3 +34,12 @@ export class GetMarkdownReqDto {
     markdownId: string;
     user: User;
 }
+
+export class UpdateMarkdownReqDto {
+    @IsNotEmpty()
+    @IsString()
+    title: string;
+
+    user: User;
+    markdownId: string;
+}

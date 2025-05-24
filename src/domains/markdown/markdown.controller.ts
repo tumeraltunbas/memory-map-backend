@@ -4,6 +4,7 @@ import {
     Delete,
     Get,
     Param,
+    Patch,
     Post,
     Req,
 } from '@nestjs/common';
@@ -14,6 +15,7 @@ import {
     DeleteMarkdownReqDto,
     GetMarkdownReqDto,
     GetMarkdownsReqDto,
+    UpdateMarkdownReqDto,
 } from '../../models/dto/req/markdown';
 import {
     CreateMarkdownResDto,
@@ -76,5 +78,19 @@ export class MarkdownController {
         };
 
         return await this.markdownOrchestration.getMarkdown(getMarkdownReqDto);
+    }
+
+    @Patch(MARKDOWN_ROUTES.UPDATE)
+    async updateMarkdown(
+        @Req() req: CustomRequest,
+        @Param('markdownId') markdownId: string,
+        @Body() updateMarkdownReqDto: UpdateMarkdownReqDto,
+    ): Promise<void> {
+        updateMarkdownReqDto.user = req.user;
+        updateMarkdownReqDto.markdownId = markdownId;
+
+        return await this.markdownOrchestration.updateMarkdown(
+            updateMarkdownReqDto,
+        );
     }
 }

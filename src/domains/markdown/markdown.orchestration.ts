@@ -6,6 +6,7 @@ import {
     DeleteMarkdownReqDto,
     GetMarkdownReqDto,
     GetMarkdownsReqDto,
+    UpdateMarkdownReqDto,
 } from '../../models/dto/req/markdown';
 import { Logger } from '../../infrastructure/logger/logger.service';
 import {
@@ -173,5 +174,51 @@ export class MarkdownOrchestration {
             this.markdownMapper.mapMarkdown(markdown);
 
         return getMarkdownResDto;
+    }
+
+    async updateMarkdown(
+        updateMarkdownReqDto: UpdateMarkdownReqDto,
+    ): Promise<void> {
+        const { title, user, markdownId } = updateMarkdownReqDto;
+
+        let markdown: Markdown = null;
+
+        try {
+            markdown = await this.markdownService.getMarkdownById(
+                markdownId,
+                user.id,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Markdown orchestration - updateMarkdown - getMarkdownById',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (!markdown) {
+            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
+        }
+
+        const updatedMarkdown: Partial<Markdown> = {
+            title,
+            updatedAt: new Date(),
+        };
+
+        try {
+            await this.markdownService.updateMarkdown(
+                markdownId,
+                user.id,
+                updatedMarkdown,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Markdown orchestration - updateMarkdown - updateMarkdown',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
     }
 }

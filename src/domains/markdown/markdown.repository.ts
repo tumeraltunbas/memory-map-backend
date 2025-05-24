@@ -75,4 +75,17 @@ export class MarkdownRepository {
 
         await this.markdownRepository.delete(query);
     }
+
+    async updateMarkdown(
+        markdownId: string,
+        userId: string,
+        markdown: Partial<Markdown>,
+    ): Promise<void> {
+        const query: FindOptionsWhere<Markdown> = {
+            id: markdownId,
+            user: { id: userId },
+        };
+
+        await this.markdownRepository.update(query, markdown);
+    }
 }

@@ -35,4 +35,16 @@ export class MarkdownService {
     async deleteMarkdown(markdownId: string, userId: string): Promise<void> {
         return await this.markdownRepository.deleteMarkdown(markdownId, userId);
     }
+
+    async updateMarkdown(
+        markdownId: string,
+        userId: string,
+        markdown: Partial<Markdown>,
+    ): Promise<void> {
+        return await this.markdownRepository.updateMarkdown(
+            markdownId,
+            userId,
+            markdown,
+        );
+    }
 }

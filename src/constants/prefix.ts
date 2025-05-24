@@ -10,4 +10,5 @@ export enum MARKDOWN_ROUTES {
     GET_ALL = '',
     DELETE = ':markdownId',
     GET_SINGLE = ':markdownId',
+    UPDATE = ':markdownId',
 }
