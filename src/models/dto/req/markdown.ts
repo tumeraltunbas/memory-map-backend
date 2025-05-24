@@ -21,3 +21,7 @@ export class CreateMarkdownReqDto {
 
     user: User;
 }
+
+export class GetMarkdownsReqDto {
+    user: User;
+}

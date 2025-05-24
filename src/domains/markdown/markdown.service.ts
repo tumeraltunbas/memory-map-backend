@@ -13,4 +13,8 @@ export class MarkdownService {
     getMarkdownByGeoLocation(coordinates: number[]): Promise<Markdown> {
         return this.markdownRepository.getMarkdownByGeoLocation(coordinates);
     }
+
+    getMarkdowns(userId: string): Promise<Markdown[]> {
+        return this.markdownRepository.getMarkdowns(userId);
+    }
 }

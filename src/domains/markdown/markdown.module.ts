@@ -8,11 +8,17 @@ import { Markdown } from '../../models/entities/markdown';
 import { JwtMiddleware } from '../../middlewares/jwt.middleware';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
+import { MarkdownMapper } from './markdown.mapper';
 
 @Module({
     imports: [TypeOrmModule.forFeature([Markdown]), AuthModule, UserModule],
     controllers: [MarkdownController],
-    providers: [MarkdownOrchestration, MarkdownRepository, MarkdownService],
+    providers: [
+        MarkdownOrchestration,
+        MarkdownRepository,
+        MarkdownService,
+        MarkdownMapper,
+    ],
 })
 export class MarkdownModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

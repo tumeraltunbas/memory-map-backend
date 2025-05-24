@@ -7,4 +7,5 @@ export enum AUTH_ROUTES {
 export enum MARKDOWN_ROUTES {
     BASE = 'markdowns',
     CREATE = '',
+    GET_ALL = '',
 }

@@ -1,21 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { MarkdownService } from './markdown.service';
 import { Markdown } from '../../models/entities/markdown';
-import { CreateMarkdownReqDto } from '../../models/dto/req/markdown';
+import {
+    CreateMarkdownReqDto,
+    GetMarkdownsReqDto,
+} from '../../models/dto/req/markdown';
 import { Logger } from '../../infrastructure/logger/logger.service';
 import {
     BusinessRuleError,
     ProcessFailureError,
 } from '../../infrastructure/error/error';
 import { ERROR_CODES } from '../../constants/error';
-import { CreateMarkdownResDto } from '../../models/dto/res/markdown';
+import {
+    CreateMarkdownResDto,
+    GetMarkdownsResDto,
+} from '../../models/dto/res/markdown';
 import { convertToPoint } from '../../utils/db';
+import { MarkdownMapper } from './markdown.mapper';
 
 @Injectable()
 export class MarkdownOrchestration {
     constructor(
         private readonly markdownService: MarkdownService,
         private readonly logger: Logger,
+        private readonly markdownMapper: MarkdownMapper,
     ) {}
 
     async createMarkdown(
@@ -67,5 +75,28 @@ export class MarkdownOrchestration {
         };
 
         return createMarkdownResDto;
+    }
+
+    async getMarkdowns(
+        getMarkdownsReqDto: GetMarkdownsReqDto,
+    ): Promise<GetMarkdownsResDto> {
+        const { user } = getMarkdownsReqDto;
+
+        let markdowns: Markdown[] = null;
+
+        try {
+            markdowns = await this.markdownService.getMarkdowns(user.id);
+        } catch (error) {
+            this.logger.error(
+                'Markdown orchestration - getMarkdowns - getMarkdowns',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        const getMarkdownsResDto: GetMarkdownsResDto =
+            this.markdownMapper.mapMarkdowns(markdowns);
+
+        return getMarkdownsResDto;
     }
 }

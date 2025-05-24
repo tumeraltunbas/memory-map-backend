@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Markdown } from '../../models/entities/markdown';
-import { Repository } from 'typeorm';
+import { FindManyOptions, FindOptions, Repository } from 'typeorm';
 
 @Injectable()
 export class MarkdownRepository {
@@ -23,5 +23,15 @@ export class MarkdownRepository {
                 lat: coordinates[1],
             })
             .getOne();
+    }
+
+    async getMarkdowns(userId: string): Promise<Markdown[]> {
+        const query: FindManyOptions<Markdown> = {
+            where: {
+                user: { id: userId },
+            },
+        };
+
+        return this.markdownRepository.find(query);
     }
 }
