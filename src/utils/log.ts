@@ -42,7 +42,7 @@ function sanitizeLogObject(logObject: object): object {
 }
 
 function sanitizeRequestBody(body: any): any {
-    const clonedBody = structuredClone(body);
+    const clonedBody = structuredClone(body) ?? {};
 
     Object.keys(clonedBody).map((k) => {
         if (requestLogBlackList.includes(k)) {
