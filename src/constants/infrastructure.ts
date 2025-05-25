@@ -1,0 +1,5 @@
+export const INFRASTRUCTURE_PROVIDERS = {
+    S3_INSTANCE: 'S3_INSTANCE',
+};
+
+export default INFRASTRUCTURE_PROVIDERS;

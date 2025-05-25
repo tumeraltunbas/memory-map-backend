@@ -7,4 +7,5 @@ export const CONFIGURATION_KEYS = {
     path: {
         webBaseUrl: 'path.webBaseUrl',
     },
+    aws: 'aws',
 };

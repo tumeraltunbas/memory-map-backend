@@ -5,6 +5,7 @@ export default (): Config => ({
         port: parseInt(process.env.PORT) || 8080,
         nodeEnv: process.env.NODE_ENV,
     },
+
     database: {
         type: process.env.DB_TYPE,
         host: process.env.DB_HOST,
@@ -18,6 +19,7 @@ export default (): Config => ({
                 ? false
                 : true,
     },
+
     security: {
         hashRounds: 12,
         jwt: {
@@ -31,9 +33,16 @@ export default (): Config => ({
             audience: process.env.WEB_BASE_URL,
         },
     },
+
     path: {
         serverBaseUrl: process.env.SERVER_BASE_URL,
         webBaseUrl: process.env.WEB_BASE_URL,
+    },
+    aws: {
+        accessKey: process.env.AWS_ACCESS_KEY,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: process.env.AWS_REGION,
+        bucketName: process.env.AWS_BUCKET_NAME,
     },
 });
 
@@ -42,6 +51,7 @@ interface Config {
     database: DatabaseConfig;
     security: SecurityConfig;
     path: PathConfig;
+    aws: AwsConfig;
 }
 
 export interface AppConfig {
@@ -74,4 +84,11 @@ export interface SecurityConfig {
 export interface PathConfig {
     serverBaseUrl: string;
     webBaseUrl: string;
+}
+
+export interface AwsConfig {
+    accessKey: string;
+    secretAccessKey: string;
+    region: string;
+    bucketName: string;
 }
