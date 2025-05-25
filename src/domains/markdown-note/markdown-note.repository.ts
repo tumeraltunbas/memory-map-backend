@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MarkdownNote } from '../../models/entities/markdown-note';
 import { FindOneOptions, FindOptionsWhere, Repository } from 'typeorm';
@@ -40,5 +40,17 @@ export class MarkdownNoteRepository {
         };
 
         await this.markdownNoteRepository.update(query, updatedMarkdownNote);
+    }
+
+    async deleteMarkdownNote(
+        markdownNoteId: string,
+        markdownId: string,
+    ): Promise<void> {
+        const query: FindOptionsWhere<MarkdownNote> = {
+            id: markdownNoteId,
+            markdown: { id: markdownId },
+        };
+
+        await this.markdownNoteRepository.delete(query);
     }
 }

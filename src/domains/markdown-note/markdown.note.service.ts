@@ -35,4 +35,14 @@ export class MarkdownNoteService {
             updatedMarkdownNote,
         );
     }
+
+    async deleteMarkdownNote(
+        markdownNoteId: string,
+        markdownId: string,
+    ): Promise<void> {
+        return await this.markdownNoteRepository.deleteMarkdownNote(
+            markdownNoteId,
+            markdownId,
+        );
+    }
 }

@@ -17,4 +17,5 @@ export enum MARKDOWN_NOTE_ROUTES {
     BASE = 'markdown-notes',
     CREATE = '',
     UPDATE = ':markdownNoteId',
+    DELETE = ':markdownNoteId/delete',
 }

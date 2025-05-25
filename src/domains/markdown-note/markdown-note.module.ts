@@ -34,12 +34,21 @@ export class MarkdownNoteModule implements NestModule {
             path: MARKDOWN_NOTE_ROUTES.BASE,
             method: RequestMethod.POST,
         });
-        consumer.apply(MarkdownNoteMiddleware).forRoutes({
-            path: combineUrl(
-                MARKDOWN_NOTE_ROUTES.BASE,
-                MARKDOWN_NOTE_ROUTES.UPDATE,
-            ),
-            method: RequestMethod.PATCH,
-        });
+        consumer.apply(MarkdownNoteMiddleware).forRoutes(
+            {
+                path: combineUrl(
+                    MARKDOWN_NOTE_ROUTES.BASE,
+                    MARKDOWN_NOTE_ROUTES.UPDATE,
+                ),
+                method: RequestMethod.PATCH,
+            },
+            {
+                path: combineUrl(
+                    MARKDOWN_NOTE_ROUTES.BASE,
+                    MARKDOWN_NOTE_ROUTES.DELETE,
+                ),
+                method: RequestMethod.POST,
+            },
+        );
     }
 }

@@ -26,3 +26,11 @@ export class UpdateMarkdownNoteReqDto {
 
     markdownNoteId: string;
 }
+
+export class DeleteMarkdownNoteReqDto {
+    @IsNotEmpty()
+    @IsString()
+    markdownId: string;
+
+    markdownNoteId: string;
+}

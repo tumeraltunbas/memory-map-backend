@@ -4,6 +4,7 @@ import { MarkdownNoteOrchestration } from './markdow-note.orchestration';
 import { CustomRequest } from '../../models/entities/request';
 import {
     CreateMarkdownNoteReqDto,
+    DeleteMarkdownNoteReqDto,
     UpdateMarkdownNoteReqDto,
 } from '../../models/dto/req/markdown-note';
 import { CreateMarkdownNoteResDto } from '../../models/dto/res/markdown-note';
@@ -35,6 +36,20 @@ export class MarkdownNoteController {
 
         await this.markdownNoteOrchestration.updateMarkdownNote(
             updateMarkdownNoteReqDto,
+        );
+
+        return undefined;
+    }
+
+    @Post(MARKDOWN_NOTE_ROUTES.DELETE)
+    async deleteMarkdownNote(
+        @Body() deleteMarkdownNoteReqDto: DeleteMarkdownNoteReqDto,
+        @Param('markdownNoteId') markdownNoteId: string,
+    ): Promise<void> {
+        deleteMarkdownNoteReqDto.markdownNoteId = markdownNoteId;
+
+        await this.markdownNoteOrchestration.deleteMarkdownNote(
+            deleteMarkdownNoteReqDto,
         );
 
         return undefined;

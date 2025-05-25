@@ -3,6 +3,7 @@ import { MarkdownNoteService } from './markdown.note.service';
 import { MarkdownNote } from '../../models/entities/markdown-note';
 import {
     CreateMarkdownNoteReqDto,
+    DeleteMarkdownNoteReqDto,
     UpdateMarkdownNoteReqDto,
 } from '../../models/dto/req/markdown-note';
 import { CreateMarkdownNoteResDto } from '../../models/dto/res/markdown-note';
@@ -69,6 +70,29 @@ export class MarkdownNoteOrchestration {
         } catch (error) {
             this.logger.error(
                 'MarkdownNoteOrchestration - updateMarkdownNote - updateMarkdownNote',
+                {
+                    error,
+                },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
+    }
+
+    async deleteMarkdownNote(
+        deleteMarkdownNoteReqDto: DeleteMarkdownNoteReqDto,
+    ): Promise<void> {
+        const { markdownNoteId, markdownId } = deleteMarkdownNoteReqDto;
+
+        try {
+            await this.markdownNoteService.deleteMarkdownNote(
+                markdownNoteId,
+                markdownId,
+            );
+        } catch (error) {
+            this.logger.error(
+                'MarkdownNoteOrchestration - deleteMarkdownNote - deleteMarkdownNote',
                 {
                     error,
                 },
