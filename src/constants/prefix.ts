@@ -19,3 +19,7 @@ export enum MARKDOWN_NOTE_ROUTES {
     UPDATE = ':markdownNoteId',
     DELETE = ':markdownNoteId/delete',
 }
+
+export enum MARKDOWN_PHOTO_ROUTES {
+    BASE = 'markdown-photos',
+}
