@@ -17,6 +17,7 @@ import { MarkdownMapper } from './markdown.mapper';
         MarkdownService,
         MarkdownMapper,
     ],
+    exports: [MarkdownService],
 })
 export class MarkdownModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {

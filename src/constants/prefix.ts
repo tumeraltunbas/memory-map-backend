@@ -12,3 +12,8 @@ export enum MARKDOWN_ROUTES {
     GET_SINGLE = ':markdownId',
     UPDATE = ':markdownId',
 }
+
+export enum MARKDOWN_NOTE_ROUTES {
+    BASE = 'markdown-notes',
+    CREATE = '',
+}

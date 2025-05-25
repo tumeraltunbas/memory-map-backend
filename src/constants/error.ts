@@ -7,6 +7,7 @@ export const ERROR_CODES = {
     authorizationError: 'authorization_error',
     markdownAlreadyExists: 'markdown_already_exists',
     markdownNotFound: 'markdown_not_found',
+    markdownIdNotFound: 'markdown_id_not_found',
 };
 
 export const ERROR_MESSAGES = {
@@ -19,4 +20,5 @@ export const ERROR_MESSAGES = {
     markdown_already_exists:
         'Markdown with the same geo-location already exists.',
     markdown_not_found: 'Markdown not found.',
+    markdown_id_not_found: 'Markdown id not found.',
 };

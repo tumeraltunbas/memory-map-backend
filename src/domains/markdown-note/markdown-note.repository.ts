@@ -1,0 +1,17 @@
+import { Inject, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { MarkdownNote } from '../../models/entities/markdown-note';
+import { Repository } from 'typeorm';
+
+@Injectable()
+export class MarkdownNoteRepository {
+    constructor(
+        @InjectRepository(MarkdownNote)
+        private readonly markdownNoteRepository: Repository<MarkdownNote>,
+    ) {}
+
+    async createMarkdownNote(markdownNote: MarkdownNote): Promise<string> {
+        const result = await this.markdownNoteRepository.insert(markdownNote);
+        return result.raw?.at(0)?.id;
+    }
+}
