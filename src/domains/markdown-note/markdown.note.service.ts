@@ -13,4 +13,26 @@ export class MarkdownNoteService {
             markdownNote,
         );
     }
+
+    async getMarkdownNoteById(
+        markdownNoteId: string,
+        markdownId: string,
+    ): Promise<MarkdownNote> {
+        return await this.markdownNoteRepository.getMarkdownNoteById(
+            markdownNoteId,
+            markdownId,
+        );
+    }
+
+    async updateMarkdownNote(
+        markdownNoteId: string,
+        markdownId: string,
+        updatedMarkdownNote: Partial<MarkdownNote>,
+    ): Promise<void> {
+        return await this.markdownNoteRepository.updateMarkdownNote(
+            markdownNoteId,
+            markdownId,
+            updatedMarkdownNote,
+        );
+    }
 }

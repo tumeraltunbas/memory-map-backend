@@ -16,4 +16,5 @@ export enum MARKDOWN_ROUTES {
 export enum MARKDOWN_NOTE_ROUTES {
     BASE = 'markdown-notes',
     CREATE = '',
+    UPDATE = ':markdownNoteId',
 }

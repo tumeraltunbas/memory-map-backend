@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { MarkdownNoteService } from './markdown.note.service';
 import { MarkdownNote } from '../../models/entities/markdown-note';
-import { CreateMarkdownNoteReqDto } from '../../models/dto/req/markdown-note';
+import {
+    CreateMarkdownNoteReqDto,
+    UpdateMarkdownNoteReqDto,
+} from '../../models/dto/req/markdown-note';
 import { CreateMarkdownNoteResDto } from '../../models/dto/res/markdown-note';
 import { ProcessFailureError } from '../../infrastructure/error/error';
 import { Logger } from '../../infrastructure/logger/logger.service';
@@ -45,5 +48,34 @@ export class MarkdownNoteOrchestration {
         };
 
         return createMarkdownNoteResDto;
+    }
+
+    async updateMarkdownNote(
+        updateMarkdownNoteReqDto: UpdateMarkdownNoteReqDto,
+    ): Promise<void> {
+        const { markdownNoteId, markdownId, text } = updateMarkdownNoteReqDto;
+
+        const updatedMarkdownNote: Partial<MarkdownNote> = {
+            text,
+            updatedAt: new Date(),
+        };
+
+        try {
+            await this.markdownNoteService.updateMarkdownNote(
+                markdownNoteId,
+                markdownId,
+                updatedMarkdownNote,
+            );
+        } catch (error) {
+            this.logger.error(
+                'MarkdownNoteOrchestration - updateMarkdownNote - updateMarkdownNote',
+                {
+                    error,
+                },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
     }
 }

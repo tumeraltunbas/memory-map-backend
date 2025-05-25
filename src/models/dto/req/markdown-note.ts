@@ -13,3 +13,16 @@ export class CreateMarkdownNoteReqDto {
 
     markdown: Markdown;
 }
+
+export class UpdateMarkdownNoteReqDto {
+    @IsNotEmpty()
+    @IsString()
+    markdownId: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @MinLength(1)
+    text: string;
+
+    markdownNoteId: string;
+}

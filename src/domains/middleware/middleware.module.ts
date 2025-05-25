@@ -3,10 +3,11 @@ import { MiddlewareService } from './middleware.service';
 import { AuthModule } from '../auth/auth.module';
 import { UserModule } from '../user/user.module';
 import { MarkdownModule } from '../markdown/markdown.module';
+import { MarkdownNoteModule } from '../markdown-note/markdown-note.module';
 
 @Global()
 @Module({
-    imports: [AuthModule, UserModule, MarkdownModule],
+    imports: [AuthModule, UserModule, MarkdownModule, MarkdownNoteModule],
     providers: [MiddlewareService],
     exports: [MiddlewareService],
 })

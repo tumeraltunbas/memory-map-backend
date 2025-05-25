@@ -8,6 +8,8 @@ export const ERROR_CODES = {
     markdownAlreadyExists: 'markdown_already_exists',
     markdownNotFound: 'markdown_not_found',
     markdownIdNotFound: 'markdown_id_not_found',
+    markdownNoteIdNotFound: 'markdown_note_id_not_found',
+    markdownNoteNotFound: 'markdown_note_not_found',
 };
 
 export const ERROR_MESSAGES = {
@@ -21,4 +23,6 @@ export const ERROR_MESSAGES = {
         'Markdown with the same geo-location already exists.',
     markdown_not_found: 'Markdown not found.',
     markdown_id_not_found: 'Markdown id not found.',
+    markdown_note_id_not_found: 'Markdown note id not found.',
+    markdown_note_not_found: 'Markdown note not found.',
 };
