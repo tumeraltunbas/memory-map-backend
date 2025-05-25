@@ -6,12 +6,10 @@ import { MarkdownService } from './markdown.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Markdown } from '../../models/entities/markdown';
 import { JwtMiddleware } from '../../middlewares/jwt.middleware';
-import { AuthModule } from '../auth/auth.module';
-import { UserModule } from '../user/user.module';
 import { MarkdownMapper } from './markdown.mapper';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Markdown]), AuthModule, UserModule],
+    imports: [TypeOrmModule.forFeature([Markdown])],
     controllers: [MarkdownController],
     providers: [
         MarkdownOrchestration,
