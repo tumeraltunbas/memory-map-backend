@@ -20,6 +20,7 @@ export class MarkdownNoteMiddleware implements NestMiddleware {
     async use(req: CustomRequest, res: Response, next: NextFunction) {
         const markdownNoteId: string = req.params?.markdownNoteId;
         const markdownId: string = req.body?.markdownId;
+        const userId: string = req.user.id;
 
         if (!markdownNoteId) {
             throw new BusinessRuleError(ERROR_CODES.markdownNoteIdNotFound);
@@ -31,6 +32,7 @@ export class MarkdownNoteMiddleware implements NestMiddleware {
             markdownNote = await this.middlewareService.getMarkdownNoteById(
                 markdownNoteId,
                 markdownId,
+                userId,
             );
         } catch (error) {
             this.logger.error(

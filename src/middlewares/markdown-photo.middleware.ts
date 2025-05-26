@@ -1,4 +1,4 @@
-import { Injectable, NestMiddleware, NotFoundException } from '@nestjs/common';
+import { Injectable, NestMiddleware } from '@nestjs/common';
 import { NextFunction } from 'express';
 import { MiddlewareService } from '../domains/middleware/middleware.service';
 import { CustomRequest } from '../models/entities/request';

@@ -48,10 +48,12 @@ export class MiddlewareService {
     async getMarkdownNoteById(
         markdownNoteId: string,
         markdownId: string,
+        userId: string,
     ): Promise<MarkdownNote> {
         return this.markdownNoteService.getMarkdownNoteById(
             markdownNoteId,
             markdownId,
+            userId,
         );
     }
 

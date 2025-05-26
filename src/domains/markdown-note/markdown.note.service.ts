@@ -17,10 +17,12 @@ export class MarkdownNoteService {
     async getMarkdownNoteById(
         markdownNoteId: string,
         markdownId: string,
+        userId: string,
     ): Promise<MarkdownNote> {
         return await this.markdownNoteRepository.getMarkdownNoteById(
             markdownNoteId,
             markdownId,
+            userId,
         );
     }
 

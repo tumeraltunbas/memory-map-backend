@@ -18,11 +18,12 @@ export class MarkdownNoteRepository {
     async getMarkdownNoteById(
         markdownNoteId: string,
         markdownId: string,
+        userId: string,
     ): Promise<MarkdownNote> {
         const query: FindOneOptions<MarkdownNote> = {
             where: {
                 id: markdownNoteId,
-                markdown: { id: markdownId },
+                markdown: { id: markdownId, user: { id: userId } },
             },
         };
 
