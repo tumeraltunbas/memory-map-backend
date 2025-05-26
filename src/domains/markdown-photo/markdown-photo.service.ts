@@ -11,4 +11,26 @@ export class MarkdownPhotoService {
     async createMarkdownPhotos(markdownPhotos: MarkdownPhoto[]): Promise<void> {
         await this.markdownPhotoRepository.createMarkdownPhotos(markdownPhotos);
     }
+
+    async deleteMarkdownPhoto(
+        markdownPhotoId: string,
+        markdownId: string,
+    ): Promise<void> {
+        await this.markdownPhotoRepository.deleteMarkdownPhoto(
+            markdownPhotoId,
+            markdownId,
+        );
+    }
+
+    async getMarkdownPhotoById(
+        markdownPhotoId: string,
+        markdownId: string,
+        userId: string,
+    ): Promise<MarkdownPhoto> {
+        return await this.markdownPhotoRepository.getMarkdownPhotoById(
+            markdownPhotoId,
+            markdownId,
+            userId,
+        );
+    }
 }

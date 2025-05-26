@@ -13,6 +13,7 @@ export const ERROR_CODES = {
     fileSizeExceeded: 'file_size_exceeded',
     fileTypeInvalid: 'file_type_invalid',
     markdownPhotoFileCountExceeded: 'markdown_photo_file_count_exceeded',
+    markdownPhotoNotFound: 'markdown_photo_not_found',
 };
 
 export const ERROR_MESSAGES = {
@@ -31,4 +32,5 @@ export const ERROR_MESSAGES = {
     file_size_exceeded: 'File size exceeded.',
     file_type_invalid: 'File type invalid.',
     markdown_photo_file_count_exceeded: 'Markdown photo file count exceeded.',
+    markdown_photo_not_found: 'Markdown photo not found.',
 };

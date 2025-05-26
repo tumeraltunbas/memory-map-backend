@@ -7,6 +7,8 @@ import { Markdown } from '../../models/entities/markdown';
 import { MarkdownService } from '../markdown/markdown.service';
 import { MarkdownNote } from '../../models/entities/markdown-note';
 import { MarkdownNoteService } from '../markdown-note/markdown.note.service';
+import { MarkdownPhoto } from '../../models/entities/markdown-photo';
+import { MarkdownPhotoService } from '../markdown-photo/markdown-photo.service';
 
 @Injectable()
 export class MiddlewareService {
@@ -15,6 +17,7 @@ export class MiddlewareService {
         private readonly userService: UserService,
         private readonly markdownService: MarkdownService,
         private readonly markdownNoteService: MarkdownNoteService,
+        private readonly markdownPhotoService: MarkdownPhotoService,
     ) {}
 
     fetchUserTokenByAccessToken(accessToken: string): Promise<UserToken> {
@@ -49,6 +52,18 @@ export class MiddlewareService {
         return this.markdownNoteService.getMarkdownNoteById(
             markdownNoteId,
             markdownId,
+        );
+    }
+
+    async getMarkdownPhotoById(
+        markdownPhotoId: string,
+        markdownId: string,
+        userId: string,
+    ): Promise<MarkdownPhoto> {
+        return this.markdownPhotoService.getMarkdownPhotoById(
+            markdownPhotoId,
+            markdownId,
+            userId,
         );
     }
 }

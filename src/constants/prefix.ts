@@ -23,4 +23,5 @@ export enum MARKDOWN_NOTE_ROUTES {
 export enum MARKDOWN_PHOTO_ROUTES {
     BASE = 'markdown-photos',
     CREATE = '',
+    DELETE = ':markdownPhotoId/delete',
 }

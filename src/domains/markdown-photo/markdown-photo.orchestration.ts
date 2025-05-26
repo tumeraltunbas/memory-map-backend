@@ -1,6 +1,9 @@
 import { Inject, Injectable } from '@nestjs/common';
 import { MarkdownPhotoService } from './markdown-photo.service';
-import { UploadMarkdownPhotoDto } from '../../models/dto/req/markdown-photo';
+import {
+    DeleteMarkdownPhotoDto,
+    UploadMarkdownPhotoDto,
+} from '../../models/dto/req/markdown-photo';
 import INFRASTRUCTURE_PROVIDERS from '../../constants/infrastructure';
 import { S3Instance } from '../../infrastructure/aws/aws';
 import { Logger } from '../../infrastructure/logger/logger.service';
@@ -95,6 +98,27 @@ export class MarkdownPhotoOrchestration {
         } catch (error) {
             this.logger.error(
                 'Markdown photo orchestration - uploadMarkdownPhoto - createMarkdownPhotos',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
+    }
+
+    async deleteMarkdownPhoto(
+        deleteMarkdownPhotoDto: DeleteMarkdownPhotoDto,
+    ): Promise<void> {
+        const { markdownPhoto, markdownId } = deleteMarkdownPhotoDto;
+
+        try {
+            await this.markdownPhotoService.deleteMarkdownPhoto(
+                markdownPhoto.id,
+                markdownId,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Markdown photo orchestration - deleteMarkdownPhoto - deleteMarkdownPhoto',
                 { error },
             );
             throw new ProcessFailureError(error);

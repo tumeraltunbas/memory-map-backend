@@ -8,7 +8,10 @@ import {
 } from '@nestjs/common';
 import { MARKDOWN_PHOTO_ROUTES } from '../../constants/prefix';
 import { MarkdownPhotoOrchestration } from './markdown-photo.orchestration';
-import { UploadMarkdownPhotoDto } from '../../models/dto/req/markdown-photo';
+import {
+    DeleteMarkdownPhotoDto,
+    UploadMarkdownPhotoDto,
+} from '../../models/dto/req/markdown-photo';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { CustomRequest } from '../../models/entities/request';
 import {
@@ -38,6 +41,18 @@ export class MarkdownPhotoController {
 
         return await this.markdownPhotoOrchestration.uploadMarkdownPhoto(
             uploadMarkdownPhotoDto,
+        );
+    }
+
+    @Post(MARKDOWN_PHOTO_ROUTES.DELETE)
+    async deleteMarkdownPhoto(
+        @Req() req: CustomRequest,
+        @Body() deleteMarkdownPhotoDto: DeleteMarkdownPhotoDto,
+    ) {
+        deleteMarkdownPhotoDto.markdownPhoto = req.markdownPhoto;
+
+        return await this.markdownPhotoOrchestration.deleteMarkdownPhoto(
+            deleteMarkdownPhotoDto,
         );
     }
 }
