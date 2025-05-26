@@ -10,6 +10,9 @@ export const ERROR_CODES = {
     markdownIdNotFound: 'markdown_id_not_found',
     markdownNoteIdNotFound: 'markdown_note_id_not_found',
     markdownNoteNotFound: 'markdown_note_not_found',
+    fileSizeExceeded: 'file_size_exceeded',
+    fileTypeInvalid: 'file_type_invalid',
+    markdownPhotoFileCountExceeded: 'markdown_photo_file_count_exceeded',
 };
 
 export const ERROR_MESSAGES = {
@@ -25,4 +28,7 @@ export const ERROR_MESSAGES = {
     markdown_id_not_found: 'Markdown id not found.',
     markdown_note_id_not_found: 'Markdown note id not found.',
     markdown_note_not_found: 'Markdown note not found.',
+    file_size_exceeded: 'File size exceeded.',
+    file_type_invalid: 'File type invalid.',
+    markdown_photo_file_count_exceeded: 'Markdown photo file count exceeded.',
 };

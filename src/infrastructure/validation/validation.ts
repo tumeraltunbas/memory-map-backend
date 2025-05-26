@@ -1,5 +1,15 @@
-import { ValidationPipeOptions } from '@nestjs/common';
-import { ValidationError, ValidationErrorData } from '../error/error';
+import {
+    Injectable,
+    PipeTransform,
+    ValidationPipeOptions,
+} from '@nestjs/common';
+import {
+    BusinessRuleError,
+    ValidationError,
+    ValidationErrorData,
+} from '../error/error';
+import configuration from '../../config/configuration';
+import { ERROR_CODES } from '../../constants/error';
 
 export const getValidationPipeOptions = (): ValidationPipeOptions => {
     return {
@@ -18,3 +28,33 @@ export const getValidationPipeOptions = (): ValidationPipeOptions => {
         },
     };
 };
+
+@Injectable()
+export class FileSizeValidationPipe implements PipeTransform {
+    transform(value: Express.Multer.File[]): Express.Multer.File[] {
+        const maxFileSize = configuration().markdown.maxFileSize;
+
+        for (const file of value) {
+            if (file.size > maxFileSize) {
+                throw new BusinessRuleError(ERROR_CODES.fileSizeExceeded);
+            }
+        }
+
+        return value;
+    }
+}
+
+@Injectable()
+export class FileTypeValidationPipe implements PipeTransform {
+    transform(value: Express.Multer.File[]): Express.Multer.File[] {
+        const allowedTypes = configuration().markdown.allowedFileTypes;
+
+        for (const file of value) {
+            if (!allowedTypes.includes(file.mimetype)) {
+                throw new BusinessRuleError(ERROR_CODES.fileTypeInvalid);
+            }
+        }
+
+        return value;
+    }
+}

@@ -9,4 +9,8 @@ export class MarkdownPhotoRepository {
         @InjectRepository(MarkdownPhoto)
         private readonly markdownPhotoRepository: Repository<MarkdownPhoto>,
     ) {}
+
+    async createMarkdownPhotos(markdownPhotos: MarkdownPhoto[]): Promise<void> {
+        await this.markdownPhotoRepository.insert(markdownPhotos);
+    }
 }

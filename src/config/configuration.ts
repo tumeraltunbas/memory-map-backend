@@ -38,11 +38,26 @@ export default (): Config => ({
         serverBaseUrl: process.env.SERVER_BASE_URL,
         webBaseUrl: process.env.WEB_BASE_URL,
     },
+
     aws: {
         accessKey: process.env.AWS_ACCESS_KEY,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
         region: process.env.AWS_REGION,
-        bucketName: process.env.AWS_BUCKET_NAME,
+        bucketName: process.env.AWS_S3_BUCKET_NAME,
+    },
+
+    markdown: {
+        maxFileSize: 5 * 1024 * 1024,
+        allowedFileTypes: [
+            'image/jpg',
+            'image/png',
+            'image/jpeg',
+            'image/webp',
+            'application/pdf',
+            'video/mp4',
+            'video/mov',
+        ],
+        maxFileCount: 5,
     },
 });
 
@@ -52,6 +67,7 @@ interface Config {
     security: SecurityConfig;
     path: PathConfig;
     aws: AwsConfig;
+    markdown: MarkdownConfig;
 }
 
 export interface AppConfig {
@@ -91,4 +107,10 @@ export interface AwsConfig {
     secretAccessKey: string;
     region: string;
     bucketName: string;
+}
+
+export interface MarkdownConfig {
+    maxFileSize: number;
+    allowedFileTypes: string[];
+    maxFileCount: number;
 }

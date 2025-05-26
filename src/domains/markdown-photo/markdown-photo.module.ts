@@ -7,9 +7,16 @@ import { MarkdownPhotoController } from './markdown-photo.controller';
 import { MarkdownPhotoOrchestration } from './markdown-photo.orchestration';
 import { MarkdownPhotoService } from './markdown-photo.service';
 import { MarkdownPhotoRepository } from './markdown-photo.repository';
+import { AwsS3Module } from '../aws/s3.module';
+import { MarkdownModule } from '../markdown/markdown.module';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([MarkdownPhoto]), LoggerModule],
+    imports: [
+        TypeOrmModule.forFeature([MarkdownPhoto]),
+        LoggerModule,
+        AwsS3Module,
+        MarkdownModule,
+    ],
     controllers: [MarkdownPhotoController],
     providers: [
         MarkdownPhotoService,

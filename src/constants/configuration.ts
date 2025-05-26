@@ -8,4 +8,5 @@ export const CONFIGURATION_KEYS = {
         webBaseUrl: 'path.webBaseUrl',
     },
     aws: 'aws',
+    markdown: 'markdown',
 };
