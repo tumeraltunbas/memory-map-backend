@@ -19,7 +19,7 @@ export class MarkdownMiddleware implements NestMiddleware {
 
     async use(req: CustomRequest, res: Response, next: NextFunction) {
         const markdownId: string =
-            req.params['markdownId'] || req.body['markdownId'];
+            req.params?.markdownId || req.body?.markdownId;
 
         if (!markdownId) {
             throw new BusinessRuleError(ERROR_CODES.markdownIdNotFound);
