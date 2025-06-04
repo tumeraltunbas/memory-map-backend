@@ -58,7 +58,7 @@ export class MarkdownPhotoOrchestration {
         }
 
         if (!markdown) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_NOT_FOUND);
         }
 
         const markdownPhotoCount = markdown.photos.length;
@@ -68,7 +68,7 @@ export class MarkdownPhotoOrchestration {
             markdownPhotoCount + files.length > this.markdownConfig.maxFileCount
         ) {
             throw new BusinessRuleError(
-                ERROR_CODES.markdownPhotoFileCountExceeded,
+                ERROR_CODES.MARKDOWN_PHOTO_FILE_COUNT_EXCEEDED,
             );
         }
 

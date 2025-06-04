@@ -36,7 +36,7 @@ export class FileSizeValidationPipe implements PipeTransform {
 
         for (const file of value) {
             if (file.size > maxFileSize) {
-                throw new BusinessRuleError(ERROR_CODES.fileSizeExceeded);
+                throw new BusinessRuleError(ERROR_CODES.FILE_SIZE_EXCEEDED);
             }
         }
 
@@ -51,7 +51,7 @@ export class FileTypeValidationPipe implements PipeTransform {
 
         for (const file of value) {
             if (!allowedTypes.includes(file.mimetype)) {
-                throw new BusinessRuleError(ERROR_CODES.fileTypeInvalid);
+                throw new BusinessRuleError(ERROR_CODES.FILE_TYPE_INVALID);
             }
         }
 

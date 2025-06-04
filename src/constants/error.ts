@@ -1,21 +1,22 @@
 export const ERROR_CODES = {
-    processFailureError: 'process_failure_error',
-    userAlreadyExists: 'user_already_exists',
-    validationError: 'validation_error',
-    invalidCredentials: 'invalid_credentials',
-    inactiveUser: 'inactive_user',
-    authorizationError: 'authorization_error',
-    markdownAlreadyExists: 'markdown_already_exists',
-    markdownNotFound: 'markdown_not_found',
-    markdownIdNotFound: 'markdown_id_not_found',
-    markdownNoteIdNotFound: 'markdown_note_id_not_found',
-    markdownNoteNotFound: 'markdown_note_not_found',
-    fileSizeExceeded: 'file_size_exceeded',
-    fileTypeInvalid: 'file_type_invalid',
-    markdownPhotoFileCountExceeded: 'markdown_photo_file_count_exceeded',
-    markdownPhotoNotFound: 'markdown_photo_not_found',
-    currentAndNewPasswordCannotBeEqual:
+    PROCESS_FAILURE_ERROR: 'process_failure_error',
+    USER_ALREADY_EXISTS: 'user_already_exists',
+    VALIDATION_ERROR: 'validation_error',
+    INVALID_CREDENTIALS: 'invalid_credentials',
+    INACTIVE_USER: 'inactive_user',
+    AUTHORIZATION_ERROR: 'authorization_error',
+    MARKDOWN_ALREADY_EXISTS: 'markdown_already_exists',
+    MARKDOWN_NOT_FOUND: 'markdown_not_found',
+    MARKDOWN_ID_NOT_FOUND: 'markdown_id_not_found',
+    MARKDOWN_NOTE_ID_NOT_FOUND: 'markdown_note_id_not_found',
+    MARKDOWN_NOTE_NOT_FOUND: 'markdown_note_not_found',
+    FILE_SIZE_EXCEEDED: 'file_size_exceeded',
+    FILE_TYPE_INVALID: 'file_type_invalid',
+    MARKDOWN_PHOTO_FILE_COUNT_EXCEEDED: 'markdown_photo_file_count_exceeded',
+    MARKDOWN_PHOTO_NOT_FOUND: 'markdown_photo_not_found',
+    CURRENT_AND_NEW_PASSWORD_CANNOT_BE_EQUAL:
         'current_and_new_password_cannot_be_equal',
+    MARKDOWN_PHOTO_ID_NOT_FOUND: 'markdown_photo_id_not_found',
 };
 
 export const ERROR_MESSAGES = {
@@ -37,4 +38,5 @@ export const ERROR_MESSAGES = {
     markdown_photo_not_found: 'Markdown photo not found.',
     current_and_new_password_cannot_be_equal:
         'Current and new password can not be equal',
+    markdown_photo_id_not_found: 'Markdown photo id not found',
 };

@@ -23,7 +23,7 @@ export class MarkdownNoteMiddleware implements NestMiddleware {
         const userId: string = req.user.id;
 
         if (!markdownNoteId) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNoteIdNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_NOTE_ID_NOT_FOUND);
         }
 
         let markdownNote: MarkdownNote = null;
@@ -45,7 +45,7 @@ export class MarkdownNoteMiddleware implements NestMiddleware {
         }
 
         if (!markdownNote) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNoteNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_NOTE_NOT_FOUND);
         }
 
         req.markdownNote = markdownNote;

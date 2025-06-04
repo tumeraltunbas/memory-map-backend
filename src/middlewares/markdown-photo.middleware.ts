@@ -23,7 +23,9 @@ export class MarkdownPhotoMiddleware implements NestMiddleware {
         const userId: string = req.user.id;
 
         if (!markdownPhotoId || !markdownId) {
-            throw new BusinessRuleError(ERROR_CODES.markdownPhotoNotFound);
+            throw new BusinessRuleError(
+                ERROR_CODES.MARKDOWN_PHOTO_ID_NOT_FOUND,
+            );
         }
 
         let markdownPhoto: MarkdownPhoto = null;
@@ -43,7 +45,7 @@ export class MarkdownPhotoMiddleware implements NestMiddleware {
         }
 
         if (!markdownPhoto) {
-            throw new BusinessRuleError(ERROR_CODES.markdownPhotoNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_PHOTO_NOT_FOUND);
         }
 
         req.markdownPhoto = markdownPhoto;

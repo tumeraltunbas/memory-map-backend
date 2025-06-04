@@ -70,7 +70,7 @@ export class JwtMiddleware implements NestMiddleware {
                     this.logger.warn('Jwt middleare - user token not found!', {
                         accessToken,
                     });
-                    throw new BusinessRuleError(ERROR_CODES.authorizationError);
+                    throw new BusinessRuleError(ERROR_CODES.AUTHORIZATION_ERROR);
                 }
 
                 try {
@@ -84,7 +84,7 @@ export class JwtMiddleware implements NestMiddleware {
                             },
                         );
                         throw new BusinessRuleError(
-                            ERROR_CODES.authorizationError,
+                            ERROR_CODES.AUTHORIZATION_ERROR,
                         );
                     }
 

@@ -12,8 +12,8 @@ export function errorCodeToMessage(errorCode: string): string {
 
 export function createErrorResponseBody<T>(exception: T): ErrorResponseBody {
     const errorResponseBody: ErrorResponseBody = {
-        code: ERROR_CODES.processFailureError,
-        message: errorCodeToMessage(ERROR_CODES.processFailureError),
+        code: ERROR_CODES.PROCESS_FAILURE_ERROR,
+        message: errorCodeToMessage(ERROR_CODES.PROCESS_FAILURE_ERROR),
         status: HttpStatus.INTERNAL_SERVER_ERROR,
     };
 

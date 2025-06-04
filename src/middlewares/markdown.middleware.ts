@@ -22,7 +22,7 @@ export class MarkdownMiddleware implements NestMiddleware {
             req.params?.markdownId || req.body?.markdownId;
 
         if (!markdownId) {
-            throw new BusinessRuleError(ERROR_CODES.markdownIdNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_ID_NOT_FOUND);
         }
 
         let markdown: Markdown = null;
@@ -40,7 +40,7 @@ export class MarkdownMiddleware implements NestMiddleware {
         }
 
         if (!markdown) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_NOT_FOUND);
         }
 
         req.markdown = markdown;

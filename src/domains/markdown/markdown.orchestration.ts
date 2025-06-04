@@ -55,7 +55,7 @@ export class MarkdownOrchestration {
         }
 
         if (existingMarkdown) {
-            throw new BusinessRuleError(ERROR_CODES.markdownAlreadyExists);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_ALREADY_EXISTS);
         }
 
         const markdown: Markdown = {
@@ -152,7 +152,7 @@ export class MarkdownOrchestration {
         }
 
         if (!markdown) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
+            throw new BusinessRuleError(ERROR_CODES.MARKDOWN_NOT_FOUND);
         }
 
         const presignedUrls: string[] = [];

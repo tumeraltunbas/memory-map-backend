@@ -50,7 +50,7 @@ export class AuthOrchestration {
         }
 
         if (existingUser) {
-            throw new BusinessRuleError(ERROR_CODES.userAlreadyExists);
+            throw new BusinessRuleError(ERROR_CODES.USER_ALREADY_EXISTS);
         }
 
         let hashedPassword: string = null;
@@ -141,11 +141,11 @@ export class AuthOrchestration {
         }
 
         if (!user) {
-            throw new BusinessRuleError(ERROR_CODES.invalidCredentials);
+            throw new BusinessRuleError(ERROR_CODES.INVALID_CREDENTIALS);
         }
 
         if (!user.isActive) {
-            throw new BusinessRuleError(ERROR_CODES.inactiveUser);
+            throw new BusinessRuleError(ERROR_CODES.INACTIVE_USER);
         }
 
         let isValidPassword: boolean = null;
@@ -160,7 +160,7 @@ export class AuthOrchestration {
         }
 
         if (!isValidPassword) {
-            throw new BusinessRuleError(ERROR_CODES.invalidCredentials);
+            throw new BusinessRuleError(ERROR_CODES.INVALID_CREDENTIALS);
         }
 
         const tokenIds: string[] = user?.userTokens.map(
@@ -214,7 +214,7 @@ export class AuthOrchestration {
 
         if (currentPassword === newPassword) {
             throw new BusinessRuleError(
-                ERROR_CODES.currentAndNewPasswordCannotBeEqual,
+                ERROR_CODES.CURRENT_AND_NEW_PASSWORD_CANNOT_BE_EQUAL,
             );
         }
 
@@ -252,7 +252,7 @@ export class AuthOrchestration {
         }
 
         if (!isValidPassword) {
-            throw new BusinessRuleError(ERROR_CODES.invalidCredentials);
+            throw new BusinessRuleError(ERROR_CODES.INVALID_CREDENTIALS);
         }
 
         let hash: string = null;

@@ -18,7 +18,7 @@ export class ProcessFailureError extends BaseError {
     constructor(cause: Error) {
         super(
             HttpStatus.INTERNAL_SERVER_ERROR,
-            ERROR_CODES.processFailureError,
+            ERROR_CODES.PROCESS_FAILURE_ERROR,
             cause,
         );
     }
@@ -33,7 +33,7 @@ export class BusinessRuleError extends BaseError {
 export class ValidationError extends BaseError {
     data: ValidationErrorData[];
     constructor(data: ValidationErrorData[]) {
-        super(HttpStatus.BAD_REQUEST, ERROR_CODES.validationError);
+        super(HttpStatus.BAD_REQUEST, ERROR_CODES.VALIDATION_ERROR);
         this.data = data;
     }
 }
