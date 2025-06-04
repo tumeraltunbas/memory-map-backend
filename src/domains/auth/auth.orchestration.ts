@@ -1,6 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { UserService } from '../user/user.service';
-import { LoginReqDto, RegisterReqDto } from '../../models/dto/req/auth';
+import {
+    LoginReqDto,
+    RegisterReqDto,
+    UpdatePasswordReqDto,
+} from '../../models/dto/req/auth';
 import { User } from '../../models/entities/user';
 import {
     BusinessRuleError,
@@ -201,5 +205,82 @@ export class AuthOrchestration {
         };
 
         return loginResDto;
+    }
+
+    async updatePassword(
+        updatePasswordReqDto: UpdatePasswordReqDto,
+    ): Promise<void> {
+        const { user, currentPassword, newPassword } = updatePasswordReqDto;
+
+        if (currentPassword === newPassword) {
+            throw new BusinessRuleError(
+                ERROR_CODES.currentAndNewPasswordCannotBeEqual,
+            );
+        }
+
+        const includePassword: boolean = true;
+        let userWithPassword: User = null;
+
+        try {
+            userWithPassword = await this.userService.fetchUserById(
+                user.id,
+                includePassword,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - updatePassword - fetchUserById',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        let isValidPassword: boolean = null;
+
+        try {
+            isValidPassword = await comparePasswords(
+                currentPassword,
+                userWithPassword.password,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - updatePassword - comparePassword',
+                {
+                    error,
+                },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (!isValidPassword) {
+            throw new BusinessRuleError(ERROR_CODES.invalidCredentials);
+        }
+
+        let hash: string = null;
+
+        try {
+            hash = await hashPassword(newPassword);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - updatePassword - hashPassword',
+                {
+                    error,
+                },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        try {
+            await this.userService.updatePassword(user.id, hash);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - updatePassword - updatePassword',
+                {
+                    error,
+                },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
     }
 }

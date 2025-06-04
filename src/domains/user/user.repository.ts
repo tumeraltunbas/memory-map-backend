@@ -1,7 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../../models/entities/user';
-import { FindOneOptions, Repository } from 'typeorm';
+import {
+    FindOneOptions,
+    FindOptionsSelect,
+    FindOptionsWhere,
+    Repository,
+} from 'typeorm';
 
 @Injectable()
 export class UserRepository {
@@ -41,13 +46,38 @@ export class UserRepository {
         return query.getOne();
     }
 
-    fetchUserById(userId: string): Promise<User> {
+    fetchUserById(userId: string, includePassword?: boolean): Promise<User> {
+        const select: FindOptionsSelect<User> = {
+            id: true,
+            email: true,
+            createdAt: true,
+            updatedAt: true,
+            isActive: true,
+        };
+
+        if (includePassword) {
+            select['password'] = true;
+        }
+
         const query: FindOneOptions<User> = {
             where: {
                 id: userId,
             },
+            select: select,
         };
 
         return this.userRepository.findOne(query);
+    }
+
+    async updatePassword(userId: string, password: string): Promise<void> {
+        const query: FindOptionsWhere<User> = {
+            id: userId,
+        };
+
+        const update: Partial<User> = {
+            password,
+        };
+
+        await this.userRepository.update(query, update);
     }
 }

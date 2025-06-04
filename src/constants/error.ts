@@ -14,6 +14,8 @@ export const ERROR_CODES = {
     fileTypeInvalid: 'file_type_invalid',
     markdownPhotoFileCountExceeded: 'markdown_photo_file_count_exceeded',
     markdownPhotoNotFound: 'markdown_photo_not_found',
+    currentAndNewPasswordCannotBeEqual:
+        'current_and_new_password_cannot_be_equal',
 };
 
 export const ERROR_MESSAGES = {
@@ -33,4 +35,6 @@ export const ERROR_MESSAGES = {
     file_type_invalid: 'File type invalid.',
     markdown_photo_file_count_exceeded: 'Markdown photo file count exceeded.',
     markdown_photo_not_found: 'Markdown photo not found.',
+    current_and_new_password_cannot_be_equal:
+        'Current and new password can not be equal',
 };

@@ -21,7 +21,11 @@ export class UserService {
         return this.userRepository.fetchUserWithTokensByEmail(email, fromLogin);
     }
 
-    fetchUserById(userId: string): Promise<User> {
-        return this.userRepository.fetchUserById(userId);
+    fetchUserById(userId: string, includePassword?: boolean): Promise<User> {
+        return this.userRepository.fetchUserById(userId, includePassword);
+    }
+
+    async updatePassword(userId: string, password: string): Promise<void> {
+        await this.userRepository.updatePassword(userId, password);
     }
 }

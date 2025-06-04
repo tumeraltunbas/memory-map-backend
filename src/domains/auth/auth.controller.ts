@@ -1,5 +1,17 @@
-import { Body, Controller, HttpStatus, Post, Res } from '@nestjs/common';
-import { LoginReqDto, RegisterReqDto } from '../../models/dto/req/auth';
+import {
+    Body,
+    Controller,
+    HttpStatus,
+    Patch,
+    Post,
+    Req,
+    Res,
+} from '@nestjs/common';
+import {
+    LoginReqDto,
+    RegisterReqDto,
+    UpdatePasswordReqDto,
+} from '../../models/dto/req/auth';
 import { AuthOrchestration } from './auth.orchestration';
 import { RegisterResDto } from '../../models/dto/res/auth';
 import { Response } from 'express';
@@ -7,6 +19,7 @@ import { SecurityConfig } from '../../config/configuration';
 import { ConfigService } from '@nestjs/config';
 import { CONFIGURATION_KEYS } from '../../constants/configuration';
 import { AUTH_ROUTES } from '../../constants/prefix';
+import { CustomRequest } from '../../models/entities/request';
 
 @Controller(AUTH_ROUTES.BASE)
 export class AuthController {
@@ -49,5 +62,16 @@ export class AuthController {
         res.status(HttpStatus.CREATED)
             .cookie(accessTokenHeaderName, loginResDto.authToken.accessToken)
             .json({});
+    }
+
+    @Patch(AUTH_ROUTES.PASSWORD_CHANGE)
+    async updatePassword(
+        @Req() req: CustomRequest,
+        @Body() updatePasswordReqDto: UpdatePasswordReqDto,
+    ): Promise<void> {
+        updatePasswordReqDto.user = req.user;
+
+        await this.authOrchestration.updatePassword(updatePasswordReqDto);
+        return undefined;
     }
 }

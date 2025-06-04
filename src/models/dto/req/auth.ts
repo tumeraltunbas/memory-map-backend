@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString, Matches } from 'class-validator';
 import { PASSWORD_REGEX } from '../../../constants/regex';
+import { User } from '../../entities/user';
 
 export class RegisterReqDto {
     @IsNotEmpty()
@@ -20,4 +21,17 @@ export class LoginReqDto {
     @IsString()
     @IsNotEmpty()
     password: string;
+}
+
+export class UpdatePasswordReqDto {
+    @IsNotEmpty()
+    @IsString()
+    currentPassword: string;
+
+    @IsNotEmpty()
+    @IsString()
+    @Matches(PASSWORD_REGEX)
+    newPassword: string;
+
+    user: User;
 }
