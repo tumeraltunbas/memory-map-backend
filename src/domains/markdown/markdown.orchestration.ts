@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { MarkdownService } from './markdown.service';
 import { Markdown } from '../../models/entities/markdown';
 import {
@@ -21,6 +21,8 @@ import {
 } from '../../models/dto/res/markdown';
 import { convertToPoint } from '../../utils/db';
 import { MarkdownMapper } from './markdown.mapper';
+import INFRASTRUCTURE_PROVIDERS from '../../constants/infrastructure';
+import { S3Instance } from '../../infrastructure/aws/aws';
 
 @Injectable()
 export class MarkdownOrchestration {
@@ -28,6 +30,8 @@ export class MarkdownOrchestration {
         private readonly markdownService: MarkdownService,
         private readonly logger: Logger,
         private readonly markdownMapper: MarkdownMapper,
+        @Inject(INFRASTRUCTURE_PROVIDERS.S3_INSTANCE)
+        private readonly s3Instance: S3Instance,
     ) {}
 
     async createMarkdown(
@@ -170,8 +174,30 @@ export class MarkdownOrchestration {
             throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
         }
 
+        const presignedUrls: string[] = [];
+
+        if (markdown.photos?.length > 0) {
+            for (const photo of markdown.photos) {
+                let presignedUrl: string = null;
+
+                try {
+                    presignedUrl = await this.s3Instance.getPresignedUrl(
+                        photo.fileName,
+                    );
+                } catch (error) {
+                    this.logger.error(
+                        'Markdown orchestration - getMarkdown - getPresignedUrl',
+                        { error, fileName: photo.fileName },
+                    );
+                    continue;
+                }
+
+                presignedUrls.push(presignedUrl);
+            }
+        }
+
         const getMarkdownResDto: GetMarkdownResDto =
-            this.markdownMapper.mapMarkdown(markdown);
+            this.markdownMapper.mapMarkdown(markdown, presignedUrls);
 
         return getMarkdownResDto;
     }
