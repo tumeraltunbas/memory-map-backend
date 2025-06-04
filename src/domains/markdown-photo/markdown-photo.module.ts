@@ -17,6 +17,7 @@ import { MarkdownModule } from '../markdown/markdown.module';
 import { MarkdownPhotoMiddleware } from '../../middlewares/markdown-photo.middleware';
 import { combineUrl } from '../../utils/string';
 import { MARKDOWN_PHOTO_ROUTES } from '../../constants/prefix';
+import { MarkdownMiddleware } from '../../middlewares/markdown.middleware';
 
 @Module({
     imports: [
@@ -37,6 +38,13 @@ export class MarkdownPhotoModule implements NestModule {
     configure(consumer: MiddlewareConsumer) {
         consumer.apply(JwtMiddleware).forRoutes(MarkdownPhotoController);
         consumer.apply(MarkdownPhotoMiddleware).forRoutes({
+            path: combineUrl(
+                MARKDOWN_PHOTO_ROUTES.BASE,
+                MARKDOWN_PHOTO_ROUTES.DELETE,
+            ),
+            method: RequestMethod.POST,
+        });
+        consumer.apply(MarkdownMiddleware).forRoutes({
             path: combineUrl(
                 MARKDOWN_PHOTO_ROUTES.BASE,
                 MARKDOWN_PHOTO_ROUTES.DELETE,

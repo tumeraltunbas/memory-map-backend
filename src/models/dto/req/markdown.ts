@@ -6,6 +6,7 @@ import {
     IsString,
 } from 'class-validator';
 import { User } from '../../entities/user';
+import { Markdown } from '../../entities/markdown';
 
 export class CreateMarkdownReqDto {
     @IsNotEmpty()
@@ -26,8 +27,8 @@ export class GetMarkdownsReqDto {
 }
 
 export class DeleteMarkdownReqDto {
-    markdownId: string;
     user: User;
+    markdown: Markdown;
 }
 
 export class GetMarkdownReqDto {
@@ -41,5 +42,5 @@ export class UpdateMarkdownReqDto {
     title: string;
 
     user: User;
-    markdownId: string;
+    markdown: Markdown;
 }

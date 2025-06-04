@@ -1,4 +1,4 @@
-import { Body, Controller, Param, Patch, Post, Req } from '@nestjs/common';
+import { Body, Controller, Patch, Post, Req } from '@nestjs/common';
 import { MARKDOWN_NOTE_ROUTES } from '../../constants/prefix';
 import { MarkdownNoteOrchestration } from './markdow-note.orchestration';
 import { CustomRequest } from '../../models/entities/request';
@@ -29,10 +29,10 @@ export class MarkdownNoteController {
 
     @Patch(MARKDOWN_NOTE_ROUTES.UPDATE)
     async updateMarkdownNote(
+        @Req() req: CustomRequest,
         @Body() updateMarkdownNoteReqDto: UpdateMarkdownNoteReqDto,
-        @Param('markdownNoteId') markdownNoteId: string,
     ): Promise<void> {
-        updateMarkdownNoteReqDto.markdownNoteId = markdownNoteId;
+        updateMarkdownNoteReqDto.markdownNote = req.markdownNote;
 
         await this.markdownNoteOrchestration.updateMarkdownNote(
             updateMarkdownNoteReqDto,
@@ -43,10 +43,10 @@ export class MarkdownNoteController {
 
     @Post(MARKDOWN_NOTE_ROUTES.DELETE)
     async deleteMarkdownNote(
+        @Req() req: CustomRequest,
         @Body() deleteMarkdownNoteReqDto: DeleteMarkdownNoteReqDto,
-        @Param('markdownNoteId') markdownNoteId: string,
     ): Promise<void> {
-        deleteMarkdownNoteReqDto.markdownNoteId = markdownNoteId;
+        deleteMarkdownNoteReqDto.markdownNote = req.markdownNote;
 
         await this.markdownNoteOrchestration.deleteMarkdownNote(
             deleteMarkdownNoteReqDto,

@@ -109,12 +109,12 @@ export class MarkdownPhotoOrchestration {
     async deleteMarkdownPhoto(
         deleteMarkdownPhotoDto: DeleteMarkdownPhotoDto,
     ): Promise<void> {
-        const { markdownPhoto, markdownId } = deleteMarkdownPhotoDto;
+        const { markdownPhoto, markdown } = deleteMarkdownPhotoDto;
 
         try {
             await this.markdownPhotoService.deleteMarkdownPhoto(
                 markdownPhoto.id,
-                markdownId,
+                markdown.id,
             );
         } catch (error) {
             this.logger.error(

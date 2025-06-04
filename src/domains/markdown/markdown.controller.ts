@@ -37,9 +37,8 @@ export class MarkdownController {
     ): Promise<CreateMarkdownResDto> {
         createMarkdownReqDto.user = req.user;
 
-        return await this.markdownOrchestration.createMarkdown(
-            createMarkdownReqDto,
-        );
+        await this.markdownOrchestration.createMarkdown(createMarkdownReqDto);
+        return undefined;
     }
 
     @Get(MARKDOWN_ROUTES.GET_ALL)
@@ -54,12 +53,9 @@ export class MarkdownController {
     }
 
     @Delete(MARKDOWN_ROUTES.DELETE)
-    async deleteMarkdown(
-        @Req() req: CustomRequest,
-        @Param('markdownId') markdownId: string,
-    ): Promise<void> {
+    async deleteMarkdown(@Req() req: CustomRequest): Promise<void> {
         const deleteMarkdownReqDto: DeleteMarkdownReqDto = {
-            markdownId,
+            markdown: req.markdown,
             user: req.user,
         };
 
@@ -83,14 +79,12 @@ export class MarkdownController {
     @Patch(MARKDOWN_ROUTES.UPDATE)
     async updateMarkdown(
         @Req() req: CustomRequest,
-        @Param('markdownId') markdownId: string,
         @Body() updateMarkdownReqDto: UpdateMarkdownReqDto,
     ): Promise<void> {
         updateMarkdownReqDto.user = req.user;
-        updateMarkdownReqDto.markdownId = markdownId;
+        updateMarkdownReqDto.markdown = req.markdown;
 
-        return await this.markdownOrchestration.updateMarkdown(
-            updateMarkdownReqDto,
-        );
+        await this.markdownOrchestration.updateMarkdown(updateMarkdownReqDto);
+        return undefined;
     }
 }

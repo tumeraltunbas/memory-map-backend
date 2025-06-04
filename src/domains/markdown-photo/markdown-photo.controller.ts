@@ -50,6 +50,7 @@ export class MarkdownPhotoController {
         @Body() deleteMarkdownPhotoDto: DeleteMarkdownPhotoDto,
     ) {
         deleteMarkdownPhotoDto.markdownPhoto = req.markdownPhoto;
+        deleteMarkdownPhotoDto.markdown = req.markdown;
 
         return await this.markdownPhotoOrchestration.deleteMarkdownPhoto(
             deleteMarkdownPhotoDto,

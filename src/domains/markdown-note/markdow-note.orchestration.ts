@@ -54,7 +54,7 @@ export class MarkdownNoteOrchestration {
     async updateMarkdownNote(
         updateMarkdownNoteReqDto: UpdateMarkdownNoteReqDto,
     ): Promise<void> {
-        const { markdownNoteId, markdownId, text } = updateMarkdownNoteReqDto;
+        const { markdownId, markdownNote, text } = updateMarkdownNoteReqDto;
 
         const updatedMarkdownNote: Partial<MarkdownNote> = {
             text,
@@ -63,7 +63,7 @@ export class MarkdownNoteOrchestration {
 
         try {
             await this.markdownNoteService.updateMarkdownNote(
-                markdownNoteId,
+                markdownNote.id,
                 markdownId,
                 updatedMarkdownNote,
             );
@@ -83,11 +83,11 @@ export class MarkdownNoteOrchestration {
     async deleteMarkdownNote(
         deleteMarkdownNoteReqDto: DeleteMarkdownNoteReqDto,
     ): Promise<void> {
-        const { markdownNoteId, markdownId } = deleteMarkdownNoteReqDto;
+        const { markdownId, markdownNote } = deleteMarkdownNoteReqDto;
 
         try {
             await this.markdownNoteService.deleteMarkdownNote(
-                markdownNoteId,
+                markdownNote.id,
                 markdownId,
             );
         } catch (error) {

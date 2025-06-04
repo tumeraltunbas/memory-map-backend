@@ -1,5 +1,6 @@
 import { IsNotEmpty, IsString, MinLength } from 'class-validator';
 import { Markdown } from '../../entities/markdown';
+import { MarkdownNote } from '../../entities/markdown-note';
 
 export class CreateMarkdownNoteReqDto {
     @IsNotEmpty()
@@ -24,7 +25,7 @@ export class UpdateMarkdownNoteReqDto {
     @MinLength(1)
     text: string;
 
-    markdownNoteId: string;
+    markdownNote: MarkdownNote;
 }
 
 export class DeleteMarkdownNoteReqDto {
@@ -32,5 +33,5 @@ export class DeleteMarkdownNoteReqDto {
     @IsString()
     markdownId: string;
 
-    markdownNoteId: string;
+    markdownNote: MarkdownNote;
 }

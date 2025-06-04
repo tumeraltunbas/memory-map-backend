@@ -111,32 +111,13 @@ export class MarkdownOrchestration {
     async deleteMarkdown(
         deleteMarkdownReqDto: DeleteMarkdownReqDto,
     ): Promise<void> {
-        const { markdownId, user } = deleteMarkdownReqDto;
-
-        let markdown: Markdown = null;
+        const { markdown, user } = deleteMarkdownReqDto;
 
         try {
-            markdown = await this.markdownService.getMarkdownById(
-                markdownId,
-                user.id,
-            );
+            await this.markdownService.deleteMarkdown(markdown.id, user.id);
         } catch (error) {
             this.logger.error(
-                'Markdown orchestration - getMarkdowns - getMarkdownById',
-                { error },
-            );
-            throw new ProcessFailureError(error);
-        }
-
-        if (!markdown) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
-        }
-
-        try {
-            await this.markdownService.deleteMarkdown(markdownId, user.id);
-        } catch (error) {
-            this.logger.error(
-                'Markdown orchestration - getMarkdowns - getMarkdownById',
+                'Markdown orchestration - getMarkdowns - deleteMarkdown',
                 { error },
             );
             throw new ProcessFailureError(error);
@@ -205,26 +186,7 @@ export class MarkdownOrchestration {
     async updateMarkdown(
         updateMarkdownReqDto: UpdateMarkdownReqDto,
     ): Promise<void> {
-        const { title, user, markdownId } = updateMarkdownReqDto;
-
-        let markdown: Markdown = null;
-
-        try {
-            markdown = await this.markdownService.getMarkdownById(
-                markdownId,
-                user.id,
-            );
-        } catch (error) {
-            this.logger.error(
-                'Markdown orchestration - updateMarkdown - getMarkdownById',
-                { error },
-            );
-            throw new ProcessFailureError(error);
-        }
-
-        if (!markdown) {
-            throw new BusinessRuleError(ERROR_CODES.markdownNotFound);
-        }
+        const { title, user, markdown } = updateMarkdownReqDto;
 
         const updatedMarkdown: Partial<Markdown> = {
             title,
@@ -233,7 +195,7 @@ export class MarkdownOrchestration {
 
         try {
             await this.markdownService.updateMarkdown(
-                markdownId,
+                markdown.id,
                 user.id,
                 updatedMarkdown,
             );
