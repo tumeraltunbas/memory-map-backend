@@ -1,4 +1,4 @@
-import { HttpStatus } from '@nestjs/common';
+import { HttpStatus, NotFoundException } from '@nestjs/common';
 import { ERROR_CODES, ERROR_MESSAGES } from '../constants/error';
 import {
     BaseError,
@@ -16,6 +16,14 @@ export function createErrorResponseBody<T>(exception: T): ErrorResponseBody {
         message: errorCodeToMessage(ERROR_CODES.PROCESS_FAILURE_ERROR),
         status: HttpStatus.INTERNAL_SERVER_ERROR,
     };
+
+    if (exception instanceof NotFoundException) {
+        errorResponseBody['code'] = ERROR_CODES.NOT_FOUND;
+        errorResponseBody['message'] = errorCodeToMessage(
+            ERROR_CODES.NOT_FOUND,
+        );
+        errorResponseBody['status'] = HttpStatus.NOT_FOUND;
+    }
 
     if (exception instanceof BaseError) {
         errorResponseBody['code'] = exception.code;
