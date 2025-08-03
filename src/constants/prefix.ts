@@ -26,3 +26,7 @@ export enum MARKDOWN_PHOTO_ROUTES {
     CREATE = '',
     DELETE = ':markdownPhotoId/delete',
 }
+
+export enum USER_ROUTES {
+    BASE = 'users',
+}

@@ -39,6 +39,10 @@ export class JwtMiddleware implements NestMiddleware {
         const accessToken: string =
             req.cookies[this.securityConfig.jwt.accessTokenHeaderName];
 
+        if (!accessToken) {
+            throw new BusinessRuleError(ERROR_CODES.AUTHORIZATION_ERROR);
+        }
+
         let payload: TokenPayload = null;
         try {
             payload = verifyToken(accessToken);
