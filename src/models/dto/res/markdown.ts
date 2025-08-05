@@ -16,8 +16,18 @@ export interface GetMarkdownResDto {
     markdownId: string;
     title: string;
     geoLocation: string;
-    photos: string[];
-    notes: string[];
+    photos: MarkdownPhotoResDto[];
+    notes: MarkdownNoteResDto[];
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface MarkdownNoteResDto {
+    id: string;
+    text: string;
+}
+
+export interface MarkdownPhotoResDto {
+    id: string;
+    url: string;
 }

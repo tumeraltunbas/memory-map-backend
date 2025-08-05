@@ -4,7 +4,7 @@ import {
     Injectable,
     NestInterceptor,
 } from '@nestjs/common';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { logResponse } from '../../utils/log';
 import { Logger } from '../logger/logger.service';
 import { ResponseLog } from '../../models/entities/log';
@@ -35,6 +35,13 @@ export class Interceptor implements NestInterceptor {
                 };
 
                 logResponse(responseLog, this.logger);
+            }),
+            map((responseData: any) => {
+                if (responseData === undefined) {
+                    return {};
+                }
+
+                return responseData;
             }),
         );
     }

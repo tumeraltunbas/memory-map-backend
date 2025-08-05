@@ -155,7 +155,7 @@ export class MarkdownOrchestration {
             throw new BusinessRuleError(ERROR_CODES.MARKDOWN_NOT_FOUND);
         }
 
-        const presignedUrls: string[] = [];
+        const presignedUrls: { id: string; url: string }[] = [];
 
         if (markdown.photos?.length > 0) {
             for (const photo of markdown.photos) {
@@ -173,7 +173,10 @@ export class MarkdownOrchestration {
                     continue;
                 }
 
-                presignedUrls.push(presignedUrl);
+                presignedUrls.push({
+                    id: photo.id,
+                    url: presignedUrl,
+                });
             }
         }
 

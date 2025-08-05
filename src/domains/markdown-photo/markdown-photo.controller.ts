@@ -35,7 +35,7 @@ export class MarkdownPhotoController {
         files: Express.Multer.File[],
         @Req() req: CustomRequest,
         @Body() uploadMarkdownPhotoDto: UploadMarkdownPhotoDto,
-    ) {
+    ): Promise<void> {
         uploadMarkdownPhotoDto.files = files;
         uploadMarkdownPhotoDto.user = req.user;
 
@@ -48,7 +48,7 @@ export class MarkdownPhotoController {
     async deleteMarkdownPhoto(
         @Req() req: CustomRequest,
         @Body() deleteMarkdownPhotoDto: DeleteMarkdownPhotoDto,
-    ) {
+    ): Promise<void> {
         deleteMarkdownPhotoDto.markdownPhoto = req.markdownPhoto;
         deleteMarkdownPhotoDto.markdown = req.markdown;
 

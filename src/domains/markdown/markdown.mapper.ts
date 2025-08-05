@@ -23,14 +23,20 @@ export class MarkdownMapper {
 
     mapMarkdown(
         markdown: Markdown,
-        presignedUrls: string[],
+        presignedUrls: { id: string; url: string }[],
     ): GetMarkdownResDto {
         const getMarkdownResDto: GetMarkdownResDto = {
             markdownId: markdown.id,
             title: markdown.title,
             geoLocation: markdown.geoLocation,
-            photos: presignedUrls,
-            notes: markdown.notes.map((note) => note.text),
+            photos: presignedUrls.map((photo) => ({
+                id: photo.id,
+                url: photo.url,
+            })),
+            notes: markdown.notes.map((note) => ({
+                id: note.id,
+                text: note.text,
+            })),
             createdAt: markdown.createdAt,
             updatedAt: markdown.updatedAt,
         };
