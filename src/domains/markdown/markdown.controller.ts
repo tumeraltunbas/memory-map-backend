@@ -37,8 +37,12 @@ export class MarkdownController {
     ): Promise<CreateMarkdownResDto> {
         createMarkdownReqDto.user = req.user;
 
-        await this.markdownOrchestration.createMarkdown(createMarkdownReqDto);
-        return undefined;
+        const result: CreateMarkdownResDto =
+            await this.markdownOrchestration.createMarkdown(
+                createMarkdownReqDto,
+            );
+
+        return result;
     }
 
     @Get(MARKDOWN_ROUTES.GET_ALL)
