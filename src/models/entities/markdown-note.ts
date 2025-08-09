@@ -7,7 +7,7 @@ export class MarkdownNote {
     @PrimaryGeneratedColumn('uuid')
     id?: string;
 
-    @Column('varchar')
+    @Column('varchar', { length: 1500 })
     text: string;
 
     @Column({
