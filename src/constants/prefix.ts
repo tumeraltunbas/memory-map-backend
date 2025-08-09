@@ -29,4 +29,5 @@ export enum MARKDOWN_PHOTO_ROUTES {
 
 export enum USER_ROUTES {
     BASE = 'users',
+    PROFILE = 'profile',
 }

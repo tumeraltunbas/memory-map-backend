@@ -1,3 +1,5 @@
+import { Point } from '../../entities/markdown';
+
 export interface CreateMarkdownResDto {
     markdownId: string;
 }
@@ -6,7 +8,7 @@ export interface GetMarkdownsResDto {
     markdowns: {
         markdownId: string;
         title: string;
-        geoLocation: string;
+        geoLocation: Point;
         createdAt: Date;
         updatedAt: Date;
     }[];
@@ -15,7 +17,7 @@ export interface GetMarkdownsResDto {
 export interface GetMarkdownResDto {
     markdownId: string;
     title: string;
-    geoLocation: string;
+    geoLocation: Point;
     photos: MarkdownPhotoResDto[];
     notes: MarkdownNoteResDto[];
     createdAt: Date;

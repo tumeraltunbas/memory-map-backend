@@ -60,6 +60,11 @@ export default (): Config => ({
         ],
         maxFileCount: 5,
     },
+
+    mapbox: {
+        accessToken: process.env.MAPBOX_ACCESS_TOKEN,
+        reverseGeocodeUrl: 'https://api.mapbox.com/search/geocode/v6/reverse',
+    },
 });
 
 interface Config {
@@ -69,6 +74,7 @@ interface Config {
     path: PathConfig;
     aws: AwsConfig;
     markdown: MarkdownConfig;
+    mapbox: MapboxConfig;
 }
 
 export interface AppConfig {
@@ -115,4 +121,9 @@ export interface MarkdownConfig {
     maxFileSize: number;
     allowedFileTypes: string[];
     maxFileCount: number;
+}
+
+export interface MapboxConfig {
+    accessToken: string;
+    reverseGeocodeUrl: string;
 }

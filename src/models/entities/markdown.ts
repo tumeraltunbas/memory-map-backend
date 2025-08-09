@@ -19,7 +19,7 @@ export class Markdown {
     title: string;
 
     @Column({ type: 'point' })
-    geoLocation: string;
+    geoLocation: Point | string;
 
     @Column({
         type: 'timestamp without time zone',

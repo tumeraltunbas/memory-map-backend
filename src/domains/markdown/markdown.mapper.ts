@@ -3,7 +3,7 @@ import {
     GetMarkdownResDto,
     GetMarkdownsResDto,
 } from '../../models/dto/res/markdown';
-import { Markdown } from '../../models/entities/markdown';
+import { Markdown, Point } from '../../models/entities/markdown';
 
 @Injectable()
 export class MarkdownMapper {
@@ -12,7 +12,7 @@ export class MarkdownMapper {
             markdowns: markdowns.map((m) => ({
                 markdownId: m.id,
                 title: m.title,
-                geoLocation: m.geoLocation,
+                geoLocation: m.geoLocation as Point,
                 createdAt: m.createdAt,
                 updatedAt: m.updatedAt,
             })),
@@ -28,7 +28,7 @@ export class MarkdownMapper {
         const getMarkdownResDto: GetMarkdownResDto = {
             markdownId: markdown.id,
             title: markdown.title,
-            geoLocation: markdown.geoLocation,
+            geoLocation: markdown.geoLocation as Point,
             photos: presignedUrls.map((photo) => ({
                 id: photo.id,
                 url: photo.url,
