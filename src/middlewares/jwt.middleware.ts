@@ -140,6 +140,10 @@ export class JwtMiddleware implements NestMiddleware {
             throw new ProcessFailureError(error);
         }
 
+        if (!user) {
+            throw new BusinessRuleError(ERROR_CODES.AUTHORIZATION_ERROR);
+        }
+
         req.user = user;
 
         next();
