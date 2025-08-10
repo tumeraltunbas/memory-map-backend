@@ -10,4 +10,5 @@ export const CONFIGURATION_KEYS = {
     aws: 'aws',
     markdown: 'markdown',
     mapbox: 'mapbox',
+    rateLimit: 'rateLimit',
 };

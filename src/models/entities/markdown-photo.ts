@@ -22,6 +22,8 @@ export class MarkdownPhoto {
     })
     updatedAt: Date;
 
-    @ManyToOne(() => Markdown, (markdown) => markdown.photos)
+    @ManyToOne(() => Markdown, (markdown) => markdown.photos, {
+        onDelete: 'CASCADE',
+    })
     markdown: Markdown;
 }

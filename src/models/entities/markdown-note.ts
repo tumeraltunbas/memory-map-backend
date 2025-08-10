@@ -22,6 +22,9 @@ export class MarkdownNote {
     })
     updatedAt: Date;
 
-    @ManyToOne(() => Markdown, (markdown) => markdown.notes)
+    @ManyToOne(() => Markdown, (markdown) => markdown.notes, {
+        nullable: false,
+        onDelete: 'CASCADE',
+    })
     markdown: Markdown;
 }

@@ -1,7 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserToken } from '../../models/entities/user-token';
-import { FindOneOptions, FindOptionsWhere, In, Repository } from 'typeorm';
+import {
+    FindOneOptions,
+    FindOptionsWhere,
+    In,
+    MoreThan,
+    Repository,
+} from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
 import { PasswordResetToken } from '../../models/entities/password-reset-token';
 
@@ -58,7 +64,7 @@ export class AuthRepository {
     }
 
     async insertPasswordResetToken(token: PasswordResetToken): Promise<void> {
-        await this.passwordResetTokenRepository.insert(token);
+        await this.passwordResetTokenRepository.save(token);
     }
 
     async fetchValidResetPasswordToken(
@@ -79,5 +85,18 @@ export class AuthRepository {
         };
 
         await this.passwordResetTokenRepository.update(query, update);
+    }
+
+    async countPasswordResetTokensSince(
+        userId: string,
+        since: Date,
+    ): Promise<number> {
+        return this.passwordResetTokenRepository.count({
+            relations: ['user'],
+            where: {
+                user: { id: userId },
+                createdAt: MoreThan(since),
+            },
+        });
     }
 }

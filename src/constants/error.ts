@@ -21,6 +21,7 @@ export const ERROR_CODES = {
     USER_NOT_FOUND: 'user_not_found',
     RESET_PASSWORD_TOKEN_NOT_FOUND: 'reset_password_token_not_found',
     RESET_PASSWORD_TOKEN_EXPIRED: 'reset_password_token_expired',
+    TOO_MANY_RESET_PASSWORD_REQUESTS: 'too_many_reset_password_requests',
 };
 
 export const ERROR_MESSAGES = {
@@ -47,4 +48,6 @@ export const ERROR_MESSAGES = {
     user_not_found: 'User not found.',
     reset_password_token_not_found: 'Reset password token not found.',
     reset_password_token_expired: 'Reset password token expired.',
+    too_many_reset_password_requests:
+        'You have made too many reset password requests. Please try again later.',
 };

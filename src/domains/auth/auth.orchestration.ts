@@ -31,12 +31,13 @@ import { Inject } from '@nestjs/common';
 import { AwsInstance } from '../../infrastructure/aws/aws';
 import { ConfigService } from '@nestjs/config';
 import { CONFIGURATION_KEYS } from '../../constants/configuration';
-import { SecurityConfig } from '../../config/configuration';
+import { RateLimitConfig, SecurityConfig } from '../../config/configuration';
 
 @Injectable()
 export class AuthOrchestration {
     private readonly securityConfig: SecurityConfig;
     private readonly webBaseUrl: string;
+    private readonly rateLimitConfig: RateLimitConfig;
 
     constructor(
         private readonly logger: Logger,
@@ -52,6 +53,9 @@ export class AuthOrchestration {
         );
         this.webBaseUrl = this.configService.get<string>(
             CONFIGURATION_KEYS.path.webBaseUrl,
+        );
+        this.rateLimitConfig = this.configService.get<RateLimitConfig>(
+            CONFIGURATION_KEYS.rateLimit,
         );
     }
 
@@ -325,7 +329,32 @@ export class AuthOrchestration {
         }
 
         if (!user) {
-            throw new BusinessRuleError(ERROR_CODES.USER_NOT_FOUND);
+            return undefined;
+        }
+
+        const oneMinuteAgo = new Date(
+            Date.now() - this.rateLimitConfig.resetPassword.timeWindow,
+        );
+
+        let recentCount = 0;
+
+        try {
+            recentCount = await this.authService.countPasswordResetTokensSince(
+                user.id,
+                oneMinuteAgo,
+            );
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - forgotPassword - countPasswordResetTokensSince',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (recentCount >= this.rateLimitConfig.resetPassword.maxRequests) {
+            throw new BusinessRuleError(
+                ERROR_CODES.TOO_MANY_RESET_PASSWORD_REQUESTS,
+            );
         }
 
         const tokenString = generatePasswordResetToken();
@@ -337,6 +366,7 @@ export class AuthOrchestration {
             user,
             token: tokenString,
             expiresAt,
+            createdAt: new Date(),
         };
 
         try {

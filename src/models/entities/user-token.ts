@@ -7,7 +7,9 @@ export class UserToken {
     @PrimaryGeneratedColumn('uuid')
     id?: string;
 
-    @ManyToOne(() => User, (user) => user.userTokens)
+    @ManyToOne(() => User, (user) => user.userTokens, {
+        onDelete: 'CASCADE',
+    })
     user: User;
 
     @Column({ type: 'varchar' })

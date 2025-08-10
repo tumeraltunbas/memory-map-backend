@@ -2,6 +2,7 @@ import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserToken } from './user-token';
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
 import { Markdown } from './markdown';
+import { PasswordResetToken } from './password-reset-token';
 
 @Entity(DATABASE_TABLE_NAMES.USERS)
 export class User {
@@ -34,6 +35,12 @@ export class User {
 
     @OneToMany(() => Markdown, (markdown) => markdown.user)
     markdowns?: Markdown[];
+
+    @OneToMany(
+        () => PasswordResetToken,
+        (passwordResetToken) => passwordResetToken.user,
+    )
+    resetPasswordTokens?: PasswordResetToken[];
 
     constructor(email: string, password: string) {
         this.email = email;

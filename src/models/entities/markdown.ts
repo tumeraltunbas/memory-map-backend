@@ -33,7 +33,9 @@ export class Markdown {
     })
     updatedAt: Date;
 
-    @ManyToOne(() => User, (user) => user.markdowns)
+    @ManyToOne(() => User, (user) => user.markdowns, {
+        onDelete: 'CASCADE',
+    })
     user: User;
 
     @OneToMany(() => MarkdownPhoto, (markdownPhoto) => markdownPhoto.markdown)

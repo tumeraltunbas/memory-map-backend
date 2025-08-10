@@ -45,4 +45,11 @@ export class AuthService {
     async markPasswordResetTokenUsed(id: string): Promise<void> {
         await this.authRepository.markPasswordResetTokenUsed(id);
     }
+
+    countPasswordResetTokensSince(
+        userId: string,
+        since: Date,
+    ): Promise<number> {
+        return this.authRepository.countPasswordResetTokensSince(userId, since);
+    }
 }

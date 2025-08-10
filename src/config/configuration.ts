@@ -67,6 +67,13 @@ export default (): Config => ({
         accessToken: process.env.MAPBOX_ACCESS_TOKEN,
         reverseGeocodeUrl: 'https://api.mapbox.com/search/geocode/v6/reverse',
     },
+
+    rateLimit: {
+        resetPassword: {
+            maxRequests: 3,
+            timeWindow: 60 * 1000,
+        },
+    },
 });
 
 interface Config {
@@ -77,6 +84,7 @@ interface Config {
     aws: AwsConfig;
     markdown: MarkdownConfig;
     mapbox: MapboxConfig;
+    rateLimit: RateLimitConfig;
 }
 
 export interface AppConfig {
@@ -130,4 +138,11 @@ export interface MarkdownConfig {
 export interface MapboxConfig {
     accessToken: string;
     reverseGeocodeUrl: string;
+}
+
+export interface RateLimitConfig {
+    resetPassword: {
+        maxRequests: number;
+        timeWindow: number;
+    };
 }

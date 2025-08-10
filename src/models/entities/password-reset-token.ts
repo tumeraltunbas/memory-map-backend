@@ -1,4 +1,11 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+    Column,
+    CreateDateColumn,
+    Entity,
+    ManyToOne,
+    JoinColumn,
+    PrimaryGeneratedColumn,
+} from 'typeorm';
 import { User } from './user';
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
 
@@ -7,7 +14,9 @@ export class PasswordResetToken {
     @PrimaryGeneratedColumn('uuid')
     id?: string;
 
-    @ManyToOne(() => User)
+    @ManyToOne(() => User, (user) => user.resetPasswordTokens, {
+        onDelete: 'CASCADE',
+    })
     user: User;
 
     @Column({ type: 'varchar', unique: true })
@@ -19,7 +28,10 @@ export class PasswordResetToken {
     @Column({ type: 'timestamp without time zone', nullable: true })
     usedAt?: Date;
 
-    @Column({ type: 'timestamp without time zone', default: new Date() })
+    @Column({
+        type: 'timestamp without time zone',
+        default: new Date(),
+    })
     createdAt?: Date;
 
     constructor(user: User, token: string, expiresAt: Date) {
