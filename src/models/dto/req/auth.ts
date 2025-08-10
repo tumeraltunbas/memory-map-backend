@@ -35,3 +35,18 @@ export class UpdatePasswordReqDto {
 
     user: User;
 }
+
+export class ForgotPasswordReqDto {
+    @IsNotEmpty()
+    @IsString()
+    email: string;
+}
+
+export class ResetPasswordReqDto {
+    @IsNotEmpty()
+    @IsString()
+    @Matches(PASSWORD_REGEX)
+    password: string;
+
+    resetPasswordToken: string;
+}

@@ -8,6 +8,7 @@ import { UserToken } from '../models/entities/user-token';
 import { Markdown } from '../models/entities/markdown';
 import { MarkdownPhoto } from '../models/entities/markdown-photo';
 import { MarkdownNote } from '../models/entities/markdown-note';
+import { PasswordResetToken } from '../models/entities/password-reset-token';
 
 export const loadConfigModule = (): Promise<DynamicModule> => {
     return ConfigModule.forRoot({
@@ -27,7 +28,14 @@ export const loadTypeOrmModule = (): DynamicModule => {
         username: databaseConfig.username,
         password: databaseConfig.password,
         database: databaseConfig.name,
-        entities: [User, UserToken, Markdown, MarkdownPhoto, MarkdownNote],
+        entities: [
+            User,
+            UserToken,
+            Markdown,
+            MarkdownPhoto,
+            MarkdownNote,
+            PasswordResetToken,
+        ],
         synchronize: databaseConfig.synchronize,
     });
 };

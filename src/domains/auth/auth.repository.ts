@@ -3,12 +3,15 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserToken } from '../../models/entities/user-token';
 import { FindOneOptions, FindOptionsWhere, In, Repository } from 'typeorm';
 import { QueryDeepPartialEntity } from 'typeorm/query-builder/QueryPartialEntity';
+import { PasswordResetToken } from '../../models/entities/password-reset-token';
 
 @Injectable()
 export class AuthRepository {
     constructor(
         @InjectRepository(UserToken)
         private readonly userTokenRepository: Repository<UserToken>,
+        @InjectRepository(PasswordResetToken)
+        private readonly passwordResetTokenRepository: Repository<PasswordResetToken>,
     ) {}
 
     async insertUserToken(userToken: UserToken): Promise<void> {
@@ -52,5 +55,29 @@ export class AuthRepository {
         };
 
         await this.userTokenRepository.update(query, update);
+    }
+
+    async insertPasswordResetToken(token: PasswordResetToken): Promise<void> {
+        await this.passwordResetTokenRepository.insert(token);
+    }
+
+    async fetchValidResetPasswordToken(
+        resetPasswordToken: string,
+    ): Promise<PasswordResetToken> {
+        const query: FindOneOptions<PasswordResetToken> = {
+            where: { token: resetPasswordToken },
+            relations: ['user'],
+        };
+
+        return this.passwordResetTokenRepository.findOne(query);
+    }
+
+    async markPasswordResetTokenUsed(id: string): Promise<void> {
+        const query: FindOptionsWhere<PasswordResetToken> = { id };
+        const update: QueryDeepPartialEntity<PasswordResetToken> = {
+            usedAt: new Date(),
+        };
+
+        await this.passwordResetTokenRepository.update(query, update);
     }
 }

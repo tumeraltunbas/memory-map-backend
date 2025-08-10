@@ -11,12 +11,18 @@ import { AuthOrchestration } from './auth.orchestration';
 import { AuthRepository } from './auth.repository';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserToken } from '../../models/entities/user-token';
+import { PasswordResetToken } from '../../models/entities/password-reset-token';
 import { JwtMiddleware } from '../../middlewares/jwt.middleware';
 import { combineUrl } from '../../utils/string';
 import { AUTH_ROUTES } from '../../constants/prefix';
+import { AwsS3Module } from '../aws/aws.module';
 
 @Module({
-    imports: [UserModule, TypeOrmModule.forFeature([UserToken])],
+    imports: [
+        UserModule,
+        AwsS3Module,
+        TypeOrmModule.forFeature([UserToken, PasswordResetToken]),
+    ],
     providers: [AuthService, AuthOrchestration, AuthRepository],
     controllers: [AuthController],
     exports: [AuthService],

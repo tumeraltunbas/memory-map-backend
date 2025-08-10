@@ -3,6 +3,8 @@ export enum AUTH_ROUTES {
     REGISTER = 'register',
     LOGIN = 'login',
     PASSWORD_CHANGE = 'password',
+    FORGOT_PASSWORD = 'password/forgot',
+    RESET_PASSWORD = 'password/reset',
 }
 
 export enum MARKDOWN_ROUTES {

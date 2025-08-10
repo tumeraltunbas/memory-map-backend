@@ -4,6 +4,8 @@ import {
     LoginReqDto,
     RegisterReqDto,
     UpdatePasswordReqDto,
+    ForgotPasswordReqDto,
+    ResetPasswordReqDto,
 } from '../../models/dto/req/auth';
 import { User } from '../../models/entities/user';
 import {
@@ -15,6 +17,7 @@ import { ERROR_CODES } from '../../constants/error';
 import {
     comparePasswords,
     generateAuthTokens,
+    generatePasswordResetToken,
     hashPassword,
 } from '../../utils/auth';
 import { AuthToken, TokenPayload } from '../../models/entities/token';
@@ -22,15 +25,35 @@ import { LoginResDto, RegisterResDto } from '../../models/dto/res/auth';
 import { UserToken } from '../../models/entities/user-token';
 import { DataSource } from 'typeorm';
 import { AuthService } from './auth.service';
+import { PasswordResetToken } from '../../models/entities/password-reset-token';
+import INFRASTRUCTURE_PROVIDERS from '../../constants/infrastructure';
+import { Inject } from '@nestjs/common';
+import { AwsInstance } from '../../infrastructure/aws/aws';
+import { ConfigService } from '@nestjs/config';
+import { CONFIGURATION_KEYS } from '../../constants/configuration';
+import { SecurityConfig } from '../../config/configuration';
 
 @Injectable()
 export class AuthOrchestration {
+    private readonly securityConfig: SecurityConfig;
+    private readonly webBaseUrl: string;
+
     constructor(
         private readonly logger: Logger,
         private readonly userService: UserService,
         private readonly dataSource: DataSource,
         private readonly authService: AuthService,
-    ) {}
+        @Inject(INFRASTRUCTURE_PROVIDERS.AWS_INSTANCE)
+        private readonly awsInstance: AwsInstance,
+        private readonly configService: ConfigService,
+    ) {
+        this.securityConfig = this.configService.get<SecurityConfig>(
+            CONFIGURATION_KEYS.security,
+        );
+        this.webBaseUrl = this.configService.get<string>(
+            CONFIGURATION_KEYS.path.webBaseUrl,
+        );
+    }
 
     async register(registerReqDto: RegisterReqDto): Promise<RegisterResDto> {
         const { email, password } = registerReqDto;
@@ -279,6 +302,128 @@ export class AuthOrchestration {
                 },
             );
             throw new ProcessFailureError(error);
+        }
+
+        return undefined;
+    }
+
+    async forgotPassword(
+        forgotPasswordReqDto: ForgotPasswordReqDto,
+    ): Promise<void> {
+        const { email } = forgotPasswordReqDto;
+
+        let user: User = null;
+
+        try {
+            user = await this.userService.fetchUserByEmail(email);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - forgotPassword - fetchUserByEmail',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (!user) {
+            throw new BusinessRuleError(ERROR_CODES.USER_NOT_FOUND);
+        }
+
+        const tokenString = generatePasswordResetToken();
+        const expiresAt = new Date(
+            Date.now() + this.securityConfig.passwordResetTokenExpiresIn,
+        );
+
+        const passwordResetToken: PasswordResetToken = {
+            user,
+            token: tokenString,
+            expiresAt,
+        };
+
+        try {
+            await this.authService.insertPasswordResetToken(passwordResetToken);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - forgotPassword - insertPasswordResetToken',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        const resetUrl = `${this.webBaseUrl}/reset-password?resetPasswordToken=${tokenString}`;
+
+        try {
+            await this.awsInstance.sendResetPasswordEmail(user.email, resetUrl);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - forgotPassword - sendResetPasswordEmail',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        return undefined;
+    }
+
+    async resetPassword(
+        resetPasswordReqDto: ResetPasswordReqDto,
+    ): Promise<void> {
+        const { resetPasswordToken, password } = resetPasswordReqDto;
+
+        let resetToken: PasswordResetToken = null;
+        try {
+            resetToken =
+                await this.authService.fetchValidResetPasswordToken(
+                    resetPasswordToken,
+                );
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - resetPassword - fetchValidResetPasswordToken',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        if (!resetToken) {
+            throw new BusinessRuleError(
+                ERROR_CODES.RESET_PASSWORD_TOKEN_NOT_FOUND,
+            );
+        }
+
+        if (resetToken.usedAt || resetToken.expiresAt < new Date()) {
+            throw new BusinessRuleError(
+                ERROR_CODES.RESET_PASSWORD_TOKEN_EXPIRED,
+            );
+        }
+
+        let hash: string = null;
+
+        try {
+            hash = await hashPassword(password);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - resetPassword - hashPassword',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        try {
+            await this.userService.updatePassword(resetToken.user.id, hash);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - resetPassword - updatePassword',
+                { error },
+            );
+            throw new ProcessFailureError(error);
+        }
+
+        try {
+            await this.authService.markPasswordResetTokenUsed(resetToken.id);
+        } catch (error) {
+            this.logger.error(
+                'Auth orchestration - resetPassword - markPasswordResetTokenUsed',
+                { error },
+            );
         }
 
         return undefined;

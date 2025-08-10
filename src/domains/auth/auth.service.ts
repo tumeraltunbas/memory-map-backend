@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthRepository } from './auth.repository';
 import { UserToken } from '../../models/entities/user-token';
+import { PasswordResetToken } from '../../models/entities/password-reset-token';
 
 @Injectable()
 export class AuthService {
@@ -27,5 +28,21 @@ export class AuthService {
             userTokenId,
             accessToken,
         );
+    }
+
+    async insertPasswordResetToken(token: PasswordResetToken): Promise<void> {
+        await this.authRepository.insertPasswordResetToken(token);
+    }
+
+    fetchValidResetPasswordToken(
+        resetPasswordToken: string,
+    ): Promise<PasswordResetToken> {
+        return this.authRepository.fetchValidResetPasswordToken(
+            resetPasswordToken,
+        );
+    }
+
+    async markPasswordResetTokenUsed(id: string): Promise<void> {
+        await this.authRepository.markPasswordResetTokenUsed(id);
     }
 }

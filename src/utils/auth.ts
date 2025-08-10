@@ -2,6 +2,7 @@ import * as jwt from 'jsonwebtoken';
 import { AuthToken, TokenPayload } from '../models/entities/token';
 import configuration from '../config/configuration';
 import * as bcrypt from 'bcrypt';
+import { randomUUID } from 'crypto';
 
 export async function hashPassword(password: string): Promise<string> {
     const { hashRounds } = configuration().security;
@@ -52,4 +53,8 @@ export function verifyToken(token: string): TokenPayload {
     const payload = jwt.verify(token, secretKey, { issuer, audience });
 
     return payload as TokenPayload;
+}
+
+export function generatePasswordResetToken(): string {
+    return randomUUID().replace(/-/g, '') + randomUUID().replace(/-/g, '');
 }

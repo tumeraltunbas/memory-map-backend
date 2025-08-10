@@ -32,6 +32,7 @@ export default (): Config => ({
             issuer: process.env.SERVER_BASE_URL,
             audience: process.env.WEB_BASE_URL,
         },
+        passwordResetTokenExpiresIn: 1000 * 60 * 30,
     },
 
     path: {
@@ -45,6 +46,7 @@ export default (): Config => ({
         region: process.env.AWS_REGION,
         bucketName: process.env.AWS_S3_BUCKET_NAME,
         presignedUrlExpiresIn: 60 * 60,
+        sesSenderEmail: process.env.AWS_SES_SENDER_EMAIL,
     },
 
     markdown: {
@@ -102,6 +104,7 @@ export interface SecurityConfig {
         issuer: string;
         audience: string;
     };
+    passwordResetTokenExpiresIn: number;
 }
 
 export interface PathConfig {
@@ -115,6 +118,7 @@ export interface AwsConfig {
     region: string;
     bucketName: string;
     presignedUrlExpiresIn: number;
+    sesSenderEmail: string;
 }
 
 export interface MarkdownConfig {

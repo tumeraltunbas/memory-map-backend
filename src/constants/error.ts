@@ -18,6 +18,9 @@ export const ERROR_CODES = {
         'current_and_new_password_cannot_be_equal',
     MARKDOWN_PHOTO_ID_NOT_FOUND: 'markdown_photo_id_not_found',
     NOT_FOUND: 'not_found',
+    USER_NOT_FOUND: 'user_not_found',
+    RESET_PASSWORD_TOKEN_NOT_FOUND: 'reset_password_token_not_found',
+    RESET_PASSWORD_TOKEN_EXPIRED: 'reset_password_token_expired',
 };
 
 export const ERROR_MESSAGES = {
@@ -41,4 +44,7 @@ export const ERROR_MESSAGES = {
         'Current and new password can not be equal.',
     markdown_photo_id_not_found: 'Markdown photo id not found.',
     not_found: 'Not found.',
+    user_not_found: 'User not found.',
+    reset_password_token_not_found: 'Reset password token not found.',
+    reset_password_token_expired: 'Reset password token expired.',
 };

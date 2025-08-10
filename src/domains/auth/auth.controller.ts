@@ -4,6 +4,7 @@ import {
     HttpStatus,
     Patch,
     Post,
+    Query,
     Req,
     Res,
 } from '@nestjs/common';
@@ -11,6 +12,8 @@ import {
     LoginReqDto,
     RegisterReqDto,
     UpdatePasswordReqDto,
+    ForgotPasswordReqDto,
+    ResetPasswordReqDto,
 } from '../../models/dto/req/auth';
 import { AuthOrchestration } from './auth.orchestration';
 import { RegisterResDto } from '../../models/dto/res/auth';
@@ -72,6 +75,25 @@ export class AuthController {
         updatePasswordReqDto.user = req.user;
 
         await this.authOrchestration.updatePassword(updatePasswordReqDto);
+        return undefined;
+    }
+
+    @Post(AUTH_ROUTES.FORGOT_PASSWORD)
+    async forgotPassword(
+        @Body() forgotPasswordReqDto: ForgotPasswordReqDto,
+    ): Promise<void> {
+        await this.authOrchestration.forgotPassword(forgotPasswordReqDto);
+        return undefined;
+    }
+
+    @Post(AUTH_ROUTES.RESET_PASSWORD)
+    async resetPassword(
+        @Query('resetPasswordToken') resetPasswordToken: string,
+        @Body() resetPasswordReqDto: ResetPasswordReqDto,
+    ): Promise<void> {
+        resetPasswordReqDto.resetPasswordToken = resetPasswordToken;
+
+        await this.authOrchestration.resetPassword(resetPasswordReqDto);
         return undefined;
     }
 }
