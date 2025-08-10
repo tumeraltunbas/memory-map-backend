@@ -12,7 +12,7 @@ import { MarkdownPhotoController } from './markdown-photo.controller';
 import { MarkdownPhotoOrchestration } from './markdown-photo.orchestration';
 import { MarkdownPhotoService } from './markdown-photo.service';
 import { MarkdownPhotoRepository } from './markdown-photo.repository';
-import { AwsS3Module } from '../aws/s3.module';
+import { AwsS3Module } from '../aws/aws.module';
 import { MarkdownModule } from '../markdown/markdown.module';
 import { MarkdownPhotoMiddleware } from '../../middlewares/markdown-photo.middleware';
 import { combineUrl } from '../../utils/string';

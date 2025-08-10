@@ -12,7 +12,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Markdown } from '../../models/entities/markdown';
 import { JwtMiddleware } from '../../middlewares/jwt.middleware';
 import { MarkdownMapper } from './markdown.mapper';
-import { AwsS3Module } from '../aws/s3.module';
+import { AwsS3Module } from '../aws/aws.module';
 import { MarkdownMiddleware } from '../../middlewares/markdown.middleware';
 import { MARKDOWN_ROUTES } from '../../constants/prefix';
 import { combineUrl } from '../../utils/string';

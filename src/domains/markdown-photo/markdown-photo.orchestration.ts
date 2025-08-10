@@ -5,7 +5,7 @@ import {
     UploadMarkdownPhotoDto,
 } from '../../models/dto/req/markdown-photo';
 import INFRASTRUCTURE_PROVIDERS from '../../constants/infrastructure';
-import { S3Instance } from '../../infrastructure/aws/aws';
+import { AwsInstance } from '../../infrastructure/aws/aws';
 import { Logger } from '../../infrastructure/logger/logger.service';
 import {
     BusinessRuleError,
@@ -24,8 +24,8 @@ export class MarkdownPhotoOrchestration {
     private readonly markdownConfig: MarkdownConfig;
     constructor(
         private readonly markdownPhotoService: MarkdownPhotoService,
-        @Inject(INFRASTRUCTURE_PROVIDERS.S3_INSTANCE)
-        private readonly s3Instance: S3Instance,
+        @Inject(INFRASTRUCTURE_PROVIDERS.AWS_INSTANCE)
+        private readonly awsInstance: AwsInstance,
         private readonly logger: Logger,
         private readonly configService: ConfigService,
         private readonly markdownService: MarkdownService,
@@ -75,7 +75,7 @@ export class MarkdownPhotoOrchestration {
         let fileNames: string[] = [];
 
         try {
-            fileNames = await this.s3Instance.uploadFiles(files);
+            fileNames = await this.awsInstance.uploadFiles(files);
         } catch (error) {
             this.logger.error(
                 'Markdown photo orchestration - uploadMarkdownPhoto - uploadFiles',

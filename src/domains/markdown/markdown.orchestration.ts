@@ -22,7 +22,7 @@ import {
 import { convertToPoint } from '../../utils/db';
 import { MarkdownMapper } from './markdown.mapper';
 import INFRASTRUCTURE_PROVIDERS from '../../constants/infrastructure';
-import { S3Instance } from '../../infrastructure/aws/aws';
+import { AwsInstance } from '../../infrastructure/aws/aws';
 
 @Injectable()
 export class MarkdownOrchestration {
@@ -30,8 +30,8 @@ export class MarkdownOrchestration {
         private readonly markdownService: MarkdownService,
         private readonly logger: Logger,
         private readonly markdownMapper: MarkdownMapper,
-        @Inject(INFRASTRUCTURE_PROVIDERS.S3_INSTANCE)
-        private readonly s3Instance: S3Instance,
+        @Inject(INFRASTRUCTURE_PROVIDERS.AWS_INSTANCE)
+        private readonly awsInstance: AwsInstance,
     ) {}
 
     async createMarkdown(
@@ -162,7 +162,7 @@ export class MarkdownOrchestration {
                 let presignedUrl: string = null;
 
                 try {
-                    presignedUrl = await this.s3Instance.getPresignedUrl(
+                    presignedUrl = await this.awsInstance.getPresignedUrl(
                         photo.fileName,
                     );
                 } catch (error) {
