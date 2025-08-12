@@ -1,9 +1,6 @@
-import { NODE_ENVIRONMENTS } from '../constants/enum';
-
 export default (): Config => ({
     app: {
         port: parseInt(process.env.PORT) || 8080,
-        nodeEnv: process.env.NODE_ENV,
     },
 
     database: {
@@ -13,11 +10,7 @@ export default (): Config => ({
         username: process.env.DB_USERNAME,
         password: process.env.DB_PASSWORD,
         name: process.env.DB_NAME,
-        synchronize:
-            (process.env.NODE_ENV as NODE_ENVIRONMENTS) ==
-            NODE_ENVIRONMENTS.PRODUCTION
-                ? false
-                : true,
+        synchronize: false,
     },
 
     security: {
@@ -89,7 +82,6 @@ interface Config {
 
 export interface AppConfig {
     port: number;
-    nodeEnv: string;
 }
 
 export interface DatabaseConfig {

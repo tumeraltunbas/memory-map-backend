@@ -1,8 +1,3 @@
-export enum NODE_ENVIRONMENTS {
-    DEVELOPMENT = 'development',
-    PRODUCTION = 'production',
-}
-
 export enum DATABASE_TYPES {
     MYSQL = 'mysql',
     POSTGRES = 'postgres',

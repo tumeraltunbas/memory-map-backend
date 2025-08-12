@@ -5,7 +5,6 @@ import {
 } from '@aws-sdk/client-s3';
 import {
     SESClient,
-    SendTemplatedEmailCommand,
     SendEmailCommand,
 } from '@aws-sdk/client-ses';
 import { AwsConfig } from '../../config/configuration';

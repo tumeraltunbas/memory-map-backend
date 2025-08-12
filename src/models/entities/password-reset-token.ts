@@ -1,9 +1,7 @@
 import {
     Column,
-    CreateDateColumn,
     Entity,
     ManyToOne,
-    JoinColumn,
     PrimaryGeneratedColumn,
 } from 'typeorm';
 import { User } from './user';
