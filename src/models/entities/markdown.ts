@@ -1,6 +1,7 @@
 import {
     Column,
     Entity,
+    Index,
     ManyToOne,
     OneToMany,
     PrimaryGeneratedColumn,
@@ -18,6 +19,7 @@ export class Markdown {
     @Column('varchar')
     title: string;
 
+    @Index({ spatial: true })
     @Column({ type: 'point' })
     geoLocation: Point | string;
 

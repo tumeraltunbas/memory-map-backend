@@ -1,4 +1,4 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { UserToken } from './user-token';
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
 import { Markdown } from './markdown';
@@ -9,6 +9,7 @@ export class User {
     @PrimaryGeneratedColumn('uuid')
     id?: string;
 
+    @Index()
     @Column({ type: 'varchar', unique: true })
     email: string;
 

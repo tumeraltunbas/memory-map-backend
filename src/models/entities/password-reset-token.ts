@@ -1,6 +1,7 @@
 import {
     Column,
     Entity,
+    Index,
     ManyToOne,
     PrimaryGeneratedColumn,
 } from 'typeorm';
@@ -17,6 +18,7 @@ export class PasswordResetToken {
     })
     user: User;
 
+    @Index()        
     @Column({ type: 'varchar', unique: true })
     token: string;
 

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, Index, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { User } from './user';
 import { DATABASE_TABLE_NAMES } from '../../constants/database';
 
@@ -12,6 +12,7 @@ export class UserToken {
     })
     user: User;
 
+    @Index()
     @Column({ type: 'varchar' })
     accessToken: string;
 
