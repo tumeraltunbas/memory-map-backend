@@ -49,11 +49,10 @@ export default (): Config => ({
             'image/png',
             'image/jpeg',
             'image/webp',
-            'application/pdf',
             'video/mp4',
             'video/mov',
         ],
-        maxFileCount: 5,
+        maxFileCount: 10,
     },
 
     mapbox: {
